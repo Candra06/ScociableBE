@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateReplyForum extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('reply_forum', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('id_reff')->unsigned();
+            $table->integer('created_by')->unsigned();
+            $table->integer('likes')->default(0);
+            $table->text('content');
+            $table->timestamps();
+            $table->foreign('created_by')->on('users')->references('id');
+            $table->foreign('id_reff')->on('forum')->references('id');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('reply_forum');
+    }
+}
