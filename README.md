@@ -8,6 +8,8 @@ Langkah install
 - Arahkan ke folder dimana akan menyimpan project.
 - Klik kanan lalu jalankan git bash.
 - jalankan command ```https://github.com/Candra06/ScociableBE.git```
+- jalankan command ```composer update```
+- setting file .env
 - jalankan command ```composer require laravel/passport "~9.0"```
 - jalankan command ```php artisan migrate```
 - jalankan command ```php artisan passport:install```
