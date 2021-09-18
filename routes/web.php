@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,9 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard.index');
-});
+Route::get('/', [DashboardController::class, 'index']);
 
 Route::get('/artikel', function () {
     return view('dashboard.artikel.index');
@@ -30,11 +30,9 @@ Route::get('/membership', function () {
 });
 
 
-Route::get('/login', function(){
-    return view('auth.login');
-});
+Route::get('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'authenticate']);
+Route::get('/register', [AuthController::class, 'register']);
+Route::post('/register', [AuthController::class, 'store']);
 
-Route::get('/register', function(){
-    return view('auth.register');
-});
 
