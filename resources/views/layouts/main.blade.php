@@ -11,12 +11,19 @@
 	<script>
 		WebFont.load({
 			google: {"families":["Lato:300,400,700,900"]},
-			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['assets/css/fonts.min.css']},
+			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: [ "{{ asset('assets/css/fonts.min.css') }}" ]},
 			active: function() {
 				sessionStorage.fonts = true;
 			}
 		});
 	</script>
+
+
+
+
+	<!-- summer note 4 -->
+	<link href="{{ asset('assets/summernote/summernote-bs4.css')}}" rel="stylesheet">
+    
 
 	<!-- CSS Files -->
 	<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
@@ -160,7 +167,7 @@
 	<script src="{{asset('assets/js/plugin/datatables/datatables.min.js')}}"></script>
 
 	<!-- Bootstrap Notify -->
-	<script src="{{asset('assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js')}}"></script>
+	{{-- <script src="{{asset('assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js')}}"></script> --}}
 
 	<!-- jQuery Vector Maps -->
 	<script src="{{asset('assets/js/plugin/jqvmap/jquery.vmap.min.js')}}"></script>
@@ -171,7 +178,7 @@
 
 	<!-- Atlantis JS -->
 	<script src="{{asset('assets/js/atlantis.min.js')}}"></script>
-
+	<script src="{{ asset('assets/summernote/summernote-bs4.js')}}"></script>
 	<!-- Atlantis DEMO methods, don't include it in your project! -->
 	<script src="{{asset('assets/js/setting-demo.js')}}"></script>
 	<script src="{{asset('assets/js/demo.js')}}"></script>
@@ -268,6 +275,35 @@
 			lineColor: '#ffa534',
 			fillColor: 'rgba(255, 165, 52, .14)'
 		});
+	</script>
+
+
+	<script>
+		$('#description').summernote({
+		tabsize: 2,
+		height: 120,
+		toolbar: [
+			['style', ['style']],
+			['font', ['bold', 'underline', 'clear']],
+			['color', ['color']],
+			['para', ['ul', 'ol', 'paragraph']],
+			['table', ['table']],
+			['insert', ['link', 'picture', 'video']],
+			['view', ['fullscreen', 'codeview', 'help']]
+		]
+		});
+	</script>
+	<script>
+		var check = $('.swal-alert').is('.ready');
+		if(check){
+			swal("{{ session('success') }}", {
+				buttons: {
+					confirm: {
+						className : 'btn btn-success'
+					}
+				},
+			});
+		}
 	</script>
 </body>
 </html>
