@@ -4,13 +4,13 @@
         <div class="sidebar-content">
             <div class="user">
                 <div class="avatar-sm float-left mr-2">
-                    <img src="assets/image/profile.jpg" alt="..." class="avatar-img rounded-circle">
+                    <img src="{{asset('assets/image/profile.jpg')}}" alt="..." class="avatar-img rounded-circle">
                 </div>
                 <div class="info">
                     <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
                         <span>
-                            Hizrian
-                            <span class="user-level">Administrator</span>
+                            {{ auth()->user()->username }}
+                            <span class="user-level">{{ auth()->user()->role }}</span>
                             <span class="caret"></span>
                         </span>
                     </a>
@@ -28,8 +28,9 @@
                                     <span class="link-collapse">Edit Profile</span>
                                 </a>
                             </li>
+                            
                             <li>
-                                <a href="#settings">
+                                <a href="{{ route('logout') }}">
                                     <span class="link-collapse">Log out</span>
                                 </a>
                             </li>

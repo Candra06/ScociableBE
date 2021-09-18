@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
@@ -15,24 +16,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [DashboardController::class, 'index']);
-
-Route::get('/artikel', function () {
-    return view('dashboard.artikel.index');
-});
-
-Route::get('/challenge', function () {
-    return view('dashboard.challenge.index');
-});
-
-Route::get('/membership', function () {
-    return view('dashboard.membership.index');
-});
 
 
-Route::get('/login', [AuthController::class, 'login']);
+
+Route::get('/login', [AuthController::class, 'login'])->middleware('guest')->name('login');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/login', [AuthController::class, 'authenticate']);
 Route::get('/register', [AuthController::class, 'register']);
 Route::post('/register', [AuthController::class, 'store']);
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->middleware('auth');
+
+    Route::get('/artikel', [ArtikelController::class, 'index']);
+    Route::get('/artikel/tambah', [ArtikelController::class, 'tambah']);
+    Route::get('/challenge', function () {
+        return view('dashboard.challenge.index');
+    });
+    Route::get('/membership', function () {
+        return view('dashboard.membership.index');
+    });
+});
 
 

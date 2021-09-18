@@ -19,6 +19,11 @@
             
           </div>
         @endif
+        @if (session()->has('loginError'))    
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('loginError') }}
+          </div>
+        @endif
         <div class="card">
 
             <div class="card-header">
@@ -29,8 +34,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="email2">Email Address</label>
-                        <input type="email" class="form-control" id="email2" name="email" placeholder="Enter Email">
-                        <small id="emailHelp2" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        <input type="email" class="form-control" id="email2" name="email" placeholder="Enter Email" value="{{ old('email') }}">
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>

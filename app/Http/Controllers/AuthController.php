@@ -59,17 +59,36 @@ class AuthController extends Controller
         ];
         
         if(Auth::attempt($credential)){
-            // $user = User::where('email', $request->email)->first();
-            // if(Hash::check($request->password, $user->password)){
-            //     $request->session()->regenerate();
-            // }
+            $request->session()->regenerate();
             return redirect()->intended('/');
         }
 
+        $user = User::where('email', $request->email)->first();
 
 
-        return back()->with('loginError', 'Login Failed!');
+        if(!is_null($user)){
+            if(!Hash::check($credential['password'], $user->password)){
+                return back()->with('loginError', 'Password yang anda masukan salah...');
+            }
+        }
+        
+
+
+
+        return back()->with('loginError', 'Username yang anda masukan salah...');
     }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
+    }
+
 
 
 }
