@@ -27,16 +27,31 @@ Route::post('/register', [AuthController::class, 'store']);
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->middleware('auth');
+    // dashboard
+    Route::get('/', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
 
-    Route::get('/artikel', [ArtikelController::class, 'index']);
-    Route::get('/artikel/tambah', [ArtikelController::class, 'tambah']);
-    Route::get('/challenge', function () {
-        return view('dashboard.challenge.index');
+    // artikel
+    Route::prefix('artikel')->name('artikel')->group(function () {
+        Route::get('/', [ArtikelController::class, 'index']);
+        Route::get('tambah', [ArtikelController::class, 'tambah']);
+        Route::post('tambah', [ArtikelController::class, 'store']);
     });
-    Route::get('/membership', function () {
-        return view('dashboard.membership.index');
+
+    // challenge
+    Route::prefix('challenge')->name('challenge')->group(function() {
+        Route::get('/', function () {
+            return view('dashboard.challenge.index');
+        });
     });
+
+    // membership
+    Route::prefix('membership')->name('membership')->group(function() {
+        Route::get('/', function () {
+            return view('dashboard.membership.index');
+        });
+    });
+
+    
 });
 
 

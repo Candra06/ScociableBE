@@ -39,7 +39,7 @@
                 </div>
             </div>
             <ul class="nav nav-primary">
-                <li class="nav-item active">
+                <li class="nav-item @if(Route::is('dashboard') ) {{ __('active')}} @endif">
                     <a href="/">
                         <i class="fas fa-home"></i>
                         <p>Dashboard</p>
@@ -53,20 +53,20 @@
                     </span>
                     <h4 class="text-section">Menu</h4>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item @if(Route::is('artikel') ) {{ __('active')}} @endif">
                     <a href="/artikel">
                         <i class="fas fa-newspaper"></i>
                         <p>Menu Artikel</p>
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item @if(Route::is('challenge') ) {{ __('active')}} @endif">
                     <a href="/challenge">
                         <i class="fas fa-tasks"></i>
                         <p>Menu Challenge</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item @if(Route::is('membership') ) {{ __('active')}} @endif">
                     <a href="/membership">
                         <i class="fas fa-users"></i>
                         <p>Membership</p>
