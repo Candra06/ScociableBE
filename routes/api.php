@@ -22,4 +22,17 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('signout', 'API\UserController@logout');
     Route::get('artikel', 'API\ArtikelController@index');
     Route::get('artikel/{id}', 'API\ArtikelController@detail');
+    Route::prefix('membership')->group(function () {
+        Route::post('store', 'API\MembershipController@store');
+    });
+    Route::prefix('forum')->group(function () {
+        Route::post('store', 'API\ForumController@store');
+        Route::get('all', 'API\ForumController@index');
+        Route::get('detail/{id}', 'API\ForumController@show');
+        Route::post('reply/{id}', 'API\ForumController@reply');
+        Route::get('like/{id}', 'API\ForumController@likes');
+        Route::get('unlike/{id}', 'API\ForumController@unlikes');
+        Route::get('likeReply/{id}', 'API\ForumController@likesReply');
+        Route::get('unlikeReply/{id}', 'API\ForumController@unlikesReply');
+    });
 });
