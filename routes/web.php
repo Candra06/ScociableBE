@@ -35,11 +35,12 @@ Route::middleware('auth')->group(function () {
     // artikel
     Route::prefix('artikel')->name('artikel')->group(function () {
         Route::get('/', [ArtikelController::class, 'index']);
+        Route::post('/fetch', [ArtikelController::class, 'fetch']);
         Route::get('/show/{id}', [ArtikelController::class, 'show']);
         Route::get('tambah', [ArtikelController::class, 'tambah']);
         Route::get('edit/{id}', [ArtikelController::class, 'edit']);
         Route::post('tambah', [ArtikelController::class, 'store']);
-        Route::delete('/{id}', [ArtikelController::class, 'delete']);
+        // Route::delete('/{id}', [ArtikelController::class, 'delete']);
     });
 
     // challenge
