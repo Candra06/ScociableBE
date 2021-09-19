@@ -6,5 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Challenge extends Model
 {
-    //
+    protected $table = 'challenge';
+    protected $fillable = ['level_diagnosa', 'day', 'content', 'description'];
 }

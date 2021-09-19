@@ -77,7 +77,7 @@ class ForumController extends Controller
     public function show($id)
     {
         $data = Forum::where('id', $id)->first();
-        $reply = ForumReply::where('id_reff', $id)->all();
+        $reply = ForumReply::where('id_reff', $id)->get();
         if ($data) {
             return response()->json([
                 'status' => true,
