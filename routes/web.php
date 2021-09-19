@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MembershipController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,8 +34,11 @@ Route::middleware('auth')->group(function () {
     // artikel
     Route::prefix('artikel')->name('artikel')->group(function () {
         Route::get('/', [ArtikelController::class, 'index']);
+        Route::get('/show/{id}', [ArtikelController::class, 'show']);
         Route::get('tambah', [ArtikelController::class, 'tambah']);
+        Route::get('edit/{id}', [ArtikelController::class, 'edit']);
         Route::post('tambah', [ArtikelController::class, 'store']);
+        Route::delete('/{id}', [ArtikelController::class, 'delete']);
     });
 
     // challenge
@@ -46,9 +50,7 @@ Route::middleware('auth')->group(function () {
 
     // membership
     Route::prefix('membership')->name('membership')->group(function() {
-        Route::get('/', function () {
-            return view('dashboard.membership.index');
-        });
+        Route::get('/', [MembershipController::class, 'index']);
     });
 
     
