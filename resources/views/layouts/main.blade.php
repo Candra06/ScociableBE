@@ -186,10 +186,55 @@
 			});
 		}
 
-		$('#add-row').DataTable({
-			"pageLength": 10,
-		});
+		
 			
+
+		@if (route('artikel'))
+			
+		$('#add-row').DataTable({
+			"pageLength": 5,
+			"lengthMenu": [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]],
+			"bLengthChange": true,
+			"bFilter": true,
+			"bInfo": true,
+			"processing":true,
+			"bServerSide": true,
+			"order": [[ 1, "asc" ]],
+			'ajax' : {
+				url: "{{ url('artikel/fetch') }}",
+				type: "POST",
+				data: function(d) {
+					d._token = "{{ csrf_token() }}"
+				}
+			},
+			columns:[
+				{ data: 'title', name: 'title' },
+				{ data: 'user.username', name: 'publisher' },
+				{ data: 'status', name: 'status' },
+				{ 
+					"class" : "text-center text-nowrap",
+					"render": function(data, type, row, meta){
+						return `<div class="form-button-action">
+                                                <a href="/artikel/show/${row.id}" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-success btn-lg" data-original-title="Show Artikel">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <a href="/artikel/edit/${row.id}" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Artikel">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                <form action="/artikel/${row.id}" method="post">
+                                                    @csrf
+                                                    <input name="_method" type="hidden" value="DELETE">
+                                                    <button type="submit" data-toggle="tooltip" title="" class="btn btn-link btn-danger hapus" data-original-title="Remove">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </form>
+                                            </div>`;
+					} 
+				},
+			]
+		});
+
+		@endif
 	</script>
 </body>
 </html>

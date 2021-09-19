@@ -59,13 +59,43 @@
                         <p>Menu Artikel</p>
                     </a>
                 </li>
-
                 <li class="nav-item @if(Route::is('challenge') ) {{ __('active')}} @endif">
-                    <a href="/challenge">
+                    <a data-toggle="collapse" href="#base" class="collapsed" aria-expanded="false">
                         <i class="fas fa-tasks"></i>
                         <p>Menu Challenge</p>
+                        <span class="caret"></span>
                     </a>
+                    <div class="collapse" id="base" style="">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ url('/challenge/0') }}">
+                                    <span class="sub-item">Bukan SAD</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/challenge/1') }}">
+                                    <span class="sub-item">SAD Ringan</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/challenge/2') }}">
+                                    <span class="sub-item">SAD Sedang</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/challenge/3') }}">
+                                    <span class="sub-item">SAD Berat</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <span class="sub-item">SAD Sangat Berat</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
+
                 <li class="nav-item @if(Route::is('membership') ) {{ __('active')}} @endif">
                     <a href="/membership">
                         <i class="fas fa-users"></i>

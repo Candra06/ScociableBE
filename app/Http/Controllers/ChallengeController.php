@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Membership;
 use Illuminate\Http\Request;
 
-class MembershipController extends Controller
+class ChallengeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
-        
-        $members = Membership::all();
-        return view('dashboard.membership.index', ['members' => $members]);
+    public function index($id = 0)
+    {
+        $diagnosa = ['Bukan SAD', 'SAD Ringan', 'SAD Sedang', 'SAD Berat', 'SAD Sangat Berat'];
+
+        return view('dashboard.challenge.index');
+    
     }
 
     /**

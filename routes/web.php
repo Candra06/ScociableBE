@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChallengeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MembershipController;
 use Illuminate\Support\Facades\Route;
@@ -34,18 +35,17 @@ Route::middleware('auth')->group(function () {
     // artikel
     Route::prefix('artikel')->name('artikel')->group(function () {
         Route::get('/', [ArtikelController::class, 'index']);
+        Route::post('/fetch', [ArtikelController::class, 'fetch']);
         Route::get('/show/{id}', [ArtikelController::class, 'show']);
         Route::get('tambah', [ArtikelController::class, 'tambah']);
         Route::get('edit/{id}', [ArtikelController::class, 'edit']);
         Route::post('tambah', [ArtikelController::class, 'store']);
-        Route::delete('/{id}', [ArtikelController::class, 'delete']);
+        // Route::delete('/{id}', [ArtikelController::class, 'delete']);
     });
 
     // challenge
     Route::prefix('challenge')->name('challenge')->group(function() {
-        Route::get('/', function () {
-            return view('dashboard.challenge.index');
-        });
+        Route::get('/{id}', [ChallengeController::class, 'index'] );
     });
 
     // membership
