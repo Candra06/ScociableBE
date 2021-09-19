@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChallengeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MembershipController;
 use Illuminate\Support\Facades\Route;
@@ -43,9 +44,7 @@ Route::middleware('auth')->group(function () {
 
     // challenge
     Route::prefix('challenge')->name('challenge')->group(function() {
-        Route::get('/', function () {
-            return view('dashboard.challenge.index');
-        });
+        Route::get('/{id}', [ChallengeController::class, 'index'] );
     });
 
     // membership
