@@ -11,13 +11,29 @@ use Illuminate\Support\Facades\Auth;
 class ArtikelController extends Controller
 {
     public function index(){
-        $data = Artikel::all();
+        $data = Artikel::with(['user'])->get();
         return view('dashboard.artikel.index', ['artikels' => $data]);
     }
 
     public function tambah(){
         return view('dashboard.artikel.tambah');
 
+    }
+
+    public function edit($id){
+        
+        $artikel = Artikel::find($id)->first();
+        
+        return view('dashboard.artikel.edit', ['artikel' => $artikel]);
+        
+    }
+
+    public function show($id){
+        
+        $artikel = Artikel::find($id)->first();
+
+        return view('dashboard.artikel.detail', ['artikel' => $artikel]);
+        
     }
 
     public function store(Request $request){
@@ -43,5 +59,13 @@ class ArtikelController extends Controller
 
         return redirect('/artikel/tambah');
 
+    }
+    
+    
+
+    public function delete($id){
+        Artikel::find($id)->delete();
+  
+        return back();
     }
 }
