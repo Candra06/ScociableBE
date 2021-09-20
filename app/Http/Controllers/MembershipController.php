@@ -23,6 +23,37 @@ class MembershipController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function fetch(){
+        $columns = [
+            'id',
+            'amount',
+            'payment_status',
+            'proof_payment'
+        ];
+
+        $orderBy = $columns[request()->input("order.0.column")];
+        $member = Membership::with(['user']); 
+        if(request()->input("search.value")){
+            $data = $member->join('users', 'users.id', '=', 'membership.id_user')->where(function($query){
+                $query->whereRaw('LOWER(users.username) like ?',['%'.strtolower(request()->input("search.value")).'%'])
+                ->orWhereRaw('LOWER(amount) like ?',['%'.strtolower(request()->input("search.value")).'%'])
+                ->orWhereRaw('LOWER(payment_status) like ?',['%'.strtolower(request()->input("search.value")).'%']);
+            });
+        }
+        $recordsFiltered = $member->get()->count();
+        $data = $member->skip(request()->input('start'))->take(request()->input('length'))->orderBy($orderBy, request()->input("order.0.dir"))->get();
+        $recordsTotal = $data->count();
+
+        return response()->json([
+            'draw' => request()->input('draw'),
+            'recordsTotal' => $recordsTotal,
+            'recordsFiltered' => $recordsFiltered,
+            'data' => $member->get(),
+            'all_request' => request()->all()
+        ]);
+    
+    }
+
     public function create()
     {
         //
@@ -68,9 +99,12 @@ class MembershipController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $member = Membership::find($request->id);
+        $member->payment_status = $request->type;
+        $member->save();
+
     }
 
     /**

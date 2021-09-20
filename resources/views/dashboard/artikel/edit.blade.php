@@ -30,9 +30,10 @@
 
                         </div>
                     </div>
-                    <form action="/artikel/tambah" method="post" enctype="multipart/form-data">
+                    <form action="/artikel/update" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
+                            <input type="hidden" name="id" value="{{ $artikel->id }}">
                             <div class="form-group form-floating-label">
                                 <input id="inputFloatingLabel" type="text" name="title" value="{{ $artikel->title }}" class="form-control input-border-bottom" required="">
                                 <label for="inputFloatingLabel" class="placeholder">Title</label>
@@ -53,10 +54,13 @@
                                 <label for="description">Deskripsi</label>
                                 <textarea name="description" name="description" id="edit" style="display: none;"></textarea>
                             </div>
-                            
+                            <div class="form-group">
+                                <img src="{{ url($artikel->thumbnail) }}" width="400" alt="gambar">
+                                <input type="hidden" name="thumbnail" value="{{ $artikel->thumbnail }}">
+                            </div>
                             <div class="form-group">
                                 <label for="exampleFormControlFile1">Example file input</label>
-                                <input type="file" class="form-control-file" name="thumbnail" required id="exampleFormControlFile1">
+                                <input type="file" class="form-control-file" name="thumbnail" id="exampleFormControlFile1">
                             </div>
                         </div>
                         <div class="card-action">

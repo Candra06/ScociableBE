@@ -171,10 +171,18 @@
 
 	<script src="{{ asset('assets/js/script.js') }}"></script>
 
+
+		
+			
+		
 	<script>
+		@if(Route::is('artikel'))
 
-
-		// success artikel
+		// edit
+		@if (isset($artikel))
+			$("#edit").summernote("code", `{!! $artikel->description !!}`);
+		@endif
+				// success artikel
 		var check = $('.swal-alert').is('.ready');
 		if(check){
 			swal("{{ session('success') }}", {
@@ -185,56 +193,187 @@
 				},
 			});
 		}
-
+		function readArtikel(){
+			$('#add-row').DataTable({
 		
-			
+				"pageLength": 5,
+				"bLengthChange": true,
+				"bFilter": true,
+				"bInfo": true,
+				"processing":true,
+				"bServerSide": true,
+				"order": [[ 1, "asc" ]],
+				'ajax' : {
+					url: "{{ url('artikel/fetch') }}",
+					type: "POST",
+					data: function(d) {
+						d._token = "{{ csrf_token() }}"
+					}
+				},
+				columns:[
+					{ data: 'title', name: 'title' },
+					{ data: 'user.username', name: 'publisher' },
+					{ data: 'status', name: 'status' },
+					{ 
+						"class" : "text-center text-nowrap",
+						"render": function(data, type, row, meta){
+							return `<div class="form-button-action">
+													<a href="/artikel/show/${row.id}" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-success btn-lg" data-original-title="Show Artikel">
+														<i class="fas fa-eye"></i>
+													</a>
+													<a href="/artikel/edit/${row.id}" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Artikel">
+														<i class="fa fa-edit"></i>
+													</a>
+													<form action="" method="post">
 
-		@if (route('artikel'))
-			
+														<input type="hidden" name="id" value="${row.id}">
+														<a href="artikel/${row.id}" data-toggle="tooltip" title="" id="hapus" class="btn btn-link btn-danger" data-id="${row.id}"  data-original-title="Remove">
+															<i class="fa fa-times"></i>
+														</a>
+														</form>
+														</div>`;
+						} 
+					},
+				]
+			});
+		}
+		
+		$(document).ready(function(){
+			readArtikel();
+		});
+
+		$("body").on("click","#hapus",function(e){
+			e.preventDefault();
+			var id = $(this).data('id');
+			swal({
+				title: `Are you sure you want to delete this record?`,
+				text: "If you delete this, it will be gone forever.",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			})
+			.then((willDelete) => {
+				if (willDelete) {
+					console.log($(this).data('id'))
+
+					$.ajax({
+						url: "{{ url('/artikel/') }}/"+id,
+						method: "DELETE",
+						data: {
+							_token : "{{ csrf_token() }}",
+							id
+						},
+						success: function(result){
+							if(result.message){
+								var oTable = $('#add-row').dataTable();
+								oTable.fnDraw(false);
+							}
+						}
+					})
+				}
+			});
+		});
+		@endif
+
+		@if (Route::is('membership'))
 		$('#add-row').DataTable({
 			"pageLength": 5,
-			"lengthMenu": [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]],
 			"bLengthChange": true,
 			"bFilter": true,
 			"bInfo": true,
 			"processing":true,
 			"bServerSide": true,
 			"order": [[ 1, "asc" ]],
-			'ajax' : {
-				url: "{{ url('artikel/fetch') }}",
-				type: "POST",
-				data: function(d) {
+			"ajax" : {
+				url: "{{ url('/membership/fetch') }}",
+				method: "POST",
+				data: function(d){
 					d._token = "{{ csrf_token() }}"
 				}
 			},
 			columns:[
-				{ data: 'title', name: 'title' },
-				{ data: 'user.username', name: 'publisher' },
-				{ data: 'status', name: 'status' },
+				{ data: 'user.username', name: 'username' },
+				{ data: 'amount', name: 'amount' },
+				{ data: 'proof_payment', name: 'proof payment' },
+				// { data: 'payment_status', name: 'payment status' },
+				{
+					render: function(data, type, row, meta){
+						var kelas = '';
+						if(row.payment_status == 'Pending'){
+							kelas = 'badge rounded-pill bg-warning text-white';
+						}else if(row.payment_status == 'Confirm'){
+							kelas = 'badge rounded-pill bg-success text-white';
+							
+						}else{
+							kelas = 'badge rounded-pill bg-danger text-white';
+
+						}
+						return `<span class="${kelas}">${row.payment_status}</span>`;
+					}
+				},
 				{ 
 					"class" : "text-center text-nowrap",
 					"render": function(data, type, row, meta){
 						return `<div class="form-button-action">
-                                                <a href="/artikel/show/${row.id}" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-success btn-lg" data-original-title="Show Artikel">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                                <a href="/artikel/edit/${row.id}" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Artikel">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <form action="/artikel/${row.id}" method="post">
-                                                    @csrf
-                                                    <input name="_method" type="hidden" value="DELETE">
-                                                    <button type="submit" data-toggle="tooltip" title="" class="btn btn-link btn-danger hapus" data-original-title="Remove">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
-                                                </form>
-                                            </div>`;
-					} 
-				},
-			]
-		});
+	
+								<button class="btn btn-icon btn-round btn-success" data-id="${row.id}" data-type="Confirm" id="confirm"><i class="fa fa-check"></i></button>
+								<button class="btn btn-icon btn-round btn-danger ml-2" data-id="${row.id}" data-type="Decline" id="decline"><i class="fa fa-times"></i></button>
 
+									</div>`;
+								} 
+							},
+						]
+					});
+					// <form action="/artikel/${row.id}" method="post">
+					// 	@csrf
+						
+					// 	<button type="submit" data-toggle="tooltip" title="" class="btn btn-link btn-danger hapus" data-original-title="Remove">
+					// 		<i class="fa fa-times"></i>
+					// 	</button>
+					// </form>
+
+			$('body').on('click', '#decline', function(){
+				console.log($(this).attr('data-id'));
+				console.log($(this).attr('data-type'));
+				const url = "{{ url('/membership/update') }}";
+				const id = $(this).attr('data-id');
+				const type = $(this).attr('data-type');
+				$.ajax({
+					url,
+					method: "POST",
+					data: {
+						_token : "{{ csrf_token() }}",
+						id,
+						type
+					},
+					success: function(result){
+						var oTable = $('#add-row').dataTable();
+						oTable.fnDraw(false);
+					}
+				})
+			});
+			$('body').on('click', '#confirm', function(){
+				console.log($(this).attr('data-id'));
+				console.log($(this).attr('data-type'));
+				const url = "{{ url('/membership/update') }}";
+				const id = $(this).attr('data-id');
+				const type = $(this).attr('data-type');
+				$.ajax({
+					url,
+					method: "POST",
+					data: {
+						_token : "{{ csrf_token() }}",
+						id,
+						type
+					},
+					success: function(result){
+						var oTable = $('#add-row').dataTable();
+						oTable.fnDraw(false);
+					}
+				})
+			});
 		@endif
+
 	</script>
 </body>
 </html>

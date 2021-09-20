@@ -36,12 +36,24 @@
                         </div>
                     </div>
                     <div class="card-body">
-                       
-                            <iframe class="embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/{{ $artikel->url }}" allowfullscreen></iframe>
-                        <div class="content">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8 px-auto">
+                                <div class="embed-responsive embed-responsive-16by9">
 
-                            {!! $artikel->description !!}
+                                    <iframe class="embed-responsive-item"  
+                                     src="http://www.youtube.com/embed/{{ $artikel->url }}" 
+                                     align="center" id="videothumbnail"></iframe>
+                              
+                                     </div>
+                            </div>
                         </div>
+                        <div class="row justify-content-center mt-5">
+                            <div class="col-md-8">
+
+                                {!! $artikel->description !!}
+                            </div>
+                        </div>
+                        
 
                     </div>
                 </div>
