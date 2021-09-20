@@ -33,10 +33,6 @@
                     <div class="card-header">
                         <div class="d-flex align-items-center">
                             <h4 class="card-title">Membership</h4>
-                            <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
-                                <i class="fa fa-plus"></i>
-                                Add Row
-                            </button>
                         </div>
                     </div>
                     <div class="card-body">
@@ -94,41 +90,23 @@
 
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <table id="add-row" class="display table table-striped table-hover dataTable" role="grid" aria-describedby="add-row_info">
-                                <thead>
-                                    <tr role="row">
-                                        <th class="sorting_asc" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 240.625px;">username</th>
-                                        <th class="sorting" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 357.638px;">amount</th><th class="sorting" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 202.637px;">Status</th>
-                                        <th style="width: 126.3px;" class="sorting" tabindex="0" aria-controls="add-row" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending">Action</th>
-                                    </tr>
-                                </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th rowspan="1" colspan="1">username</th>
-                                        <th rowspan="1" colspan="1">amount</th>
-                                        <th rowspan="1" colspan="1">Status</th>
-                                        <th rowspan="1" colspan="1">Action</th></tr>
-                                </tfoot>
-                                <tbody>
-                                    @foreach ($members as $member)    
-                                        <tr role="row" class="odd">
-                                            <td class="sorting_1">{{ $member->user->username }}</td>
-                                            <td>{{ $member->amount }}</td>
-                                            <td>{{ $member->payment_status }}</td>
-                                            <td>
-                                                <div class="form-button-action">
-                                                    <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                        <table id="add-row" class="display table table-striped table-hover" cellspacing="0" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>username</th>
+                                                    <th>amount</th>
+                                                    <th>proof payment</th>
+                                                    <th>payment status</th>
+                                                    <th>action</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                         </div>
                     </div>
                             

@@ -30,27 +30,34 @@ Route::post('/register', [AuthController::class, 'store']);
 
 Route::middleware('auth')->group(function () {
     // dashboard
-    Route::get('/', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/user', [DashboardController::class, 'user'])->name('dashboard');
+    Route::post('/user/update', [DashboardController::class, 'update'])->name('dashboard');
 
     // artikel
     Route::prefix('artikel')->name('artikel')->group(function () {
         Route::get('/', [ArtikelController::class, 'index']);
-        Route::post('/fetch', [ArtikelController::class, 'fetch']);
         Route::get('/show/{id}', [ArtikelController::class, 'show']);
-        Route::get('tambah', [ArtikelController::class, 'tambah']);
         Route::get('edit/{id}', [ArtikelController::class, 'edit']);
+        Route::get('tambah', [ArtikelController::class, 'tambah']);
+        Route::post('/fetch', [ArtikelController::class, 'fetch']);
+        Route::post('update', [ArtikelController::class, 'update']);
         Route::post('tambah', [ArtikelController::class, 'store']);
-        // Route::delete('/{id}', [ArtikelController::class, 'delete']);
+        Route::delete('/{id}', [ArtikelController::class, 'delete']);
     });
 
     // challenge
     Route::prefix('challenge')->name('challenge')->group(function() {
         Route::get('/{id}', [ChallengeController::class, 'index'] );
+        
     });
 
     // membership
     Route::prefix('membership')->name('membership')->group(function() {
         Route::get('/', [MembershipController::class, 'index']);
+        Route::post('/fetch', [MembershipController::class, 'fetch']);
+        Route::post('/update', [MembershipController::class, 'update']);
+
     });
 
     
