@@ -27,7 +27,16 @@ $('#edit').summernote({
     ]
     
     });
-
+    var check = $('.swal-alert').is('.ready');
+    if(check){
+        swal("{{ session('success') }}", {
+            buttons: {
+                confirm: {
+                    className : 'btn btn-success'
+                }
+            },
+        });
+    }
 
     
 

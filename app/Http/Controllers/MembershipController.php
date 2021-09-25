@@ -18,11 +18,7 @@ class MembershipController extends Controller
         return view('dashboard.membership.index', ['members' => $members]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function fetch(){
         $columns = [
             'id',
@@ -92,13 +88,7 @@ class MembershipController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request)
     {
         $member = Membership::find($request->id);

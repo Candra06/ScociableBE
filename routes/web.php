@@ -30,9 +30,15 @@ Route::post('/register', [AuthController::class, 'store']);
 
 Route::middleware('auth')->group(function () {
     // dashboard
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/user', [DashboardController::class, 'user'])->name('dashboard');
-    Route::post('/user/update', [DashboardController::class, 'update'])->name('dashboard');
+    Route::prefix('/')->name('dashboard')->group(function(){
+        Route::get('/', [DashboardController::class, 'index']);
+        Route::get('/profile', [DashboardController::class, 'profile']);
+        Route::get('/user/tambah', [DashboardController::class, 'tambah']);
+        Route::get('/user/list', [DashboardController::class, 'list']);
+        Route::post('/user/fetch', [DashboardController::class, 'fetch']);
+        Route::post('/user/store', [DashboardController::class, 'store']);
+        Route::post('/user/update', [DashboardController::class, 'update']);
+    });
 
     // artikel
     Route::prefix('artikel')->name('artikel')->group(function () {
@@ -48,7 +54,8 @@ Route::middleware('auth')->group(function () {
 
     // challenge
     Route::prefix('challenge')->name('challenge')->group(function() {
-        Route::get('/{id}', [ChallengeController::class, 'index'] );
+        Route::get('/', [ChallengeController::class, 'index'] );
+        Route::post('/fetch', [ChallengeController::class, 'fetch'] );
         
     });
 

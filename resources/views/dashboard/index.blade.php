@@ -10,8 +10,8 @@
                     <h5 class="text-white op-7 mb-2">Sociable Admin</h5>
                 </div>
                 <div class="ml-md-auto py-2 py-md-0">
-                    <a href="#" class="btn btn-white btn-border btn-round mr-2">Membership</a>
-                    <a href="#" class="btn btn-secondary btn-round">Add User</a>
+                    <a href="/user/list" class="btn btn-white btn-border btn-round mr-2">List User</a>
+                    <a href="/user/tambah" class="btn btn-secondary btn-round">Add User</a>
                 </div>
             </div>
         </div>

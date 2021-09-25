@@ -19,7 +19,7 @@
                     <div class="collapse in" id="collapseExample">
                         <ul class="nav">
                             <li>
-                                <a href="/user">
+                                <a href="/profile">
                                     <span class="link-collapse">My Profile</span>
                                 </a>
                             </li>
@@ -55,40 +55,11 @@
                     </a>
                 </li>
                 <li class="nav-item @if(Route::is('challenge') ) {{ __('active')}} @endif">
-                    <a data-toggle="collapse" href="#base" class="collapsed" aria-expanded="false">
+                    <a href="/challenge">
                         <i class="fas fa-tasks"></i>
                         <p>Menu Challenge</p>
-                        <span class="caret"></span>
+                        
                     </a>
-                    <div class="collapse" id="base" style="">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ url('/challenge/0') }}">
-                                    <span class="sub-item">Bukan SAD</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ url('/challenge/1') }}">
-                                    <span class="sub-item">SAD Ringan</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ url('/challenge/2') }}">
-                                    <span class="sub-item">SAD Sedang</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ url('/challenge/3') }}">
-                                    <span class="sub-item">SAD Berat</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <span class="sub-item">SAD Sangat Berat</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
 
                 <li class="nav-item @if(Route::is('membership') ) {{ __('active')}} @endif">

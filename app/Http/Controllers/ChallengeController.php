@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Challenge;
 use Illuminate\Http\Request;
 
 class ChallengeController extends Controller
@@ -11,75 +12,69 @@ class ChallengeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id = 0)
+    public function index()
     {
-        $diagnosa = ['Bukan SAD', 'SAD Ringan', 'SAD Sedang', 'SAD Berat', 'SAD Sangat Berat'];
+
 
         return view('dashboard.challenge.index');
     
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function fetch()
     {
-        //
+        $columns = [
+            'day',
+            'level_diagnosa',
+            'content',
+            'description'
+        ];
+
+        $orderBy = $columns[request()->input("order.0.column")];
+        $artikel = Challenge::select('*'); 
+        if(request()->input("search.value")){
+            $data = $artikel->where(function($query){
+                $query->whereRaw('LOWER(day) like ?',['%'.strtolower(request()->input("search.value")).'%'])
+                ->orWhereRaw('LOWER(level_diagnosa) like ?',['%'.strtolower(request()->input("search.value")).'%'])
+                ->orWhereRaw('LOWER(content) like ?',['%'.strtolower(request()->input("search.value")).'%'])
+                ->orWhereRaw('LOWER(description) like ?',['%'.strtolower(request()->input("search.value")).'%']);
+            });
+        }
+        $recordsFiltered = $artikel->get()->count();
+        $data = $artikel->skip(request()->input('start'))->take(request()->input('length'))->orderBy($orderBy, request()->input("order.0.dir"))->get();
+        $recordsTotal = $data->count();
+
+        return response()->json([
+            'draw' => request()->input('draw'),
+            'recordsTotal' => $recordsTotal,
+            'recordsFiltered' => $recordsFiltered,
+            'data' => $artikel->get(),
+            'all_request' => request()->all()
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         //

@@ -23,7 +23,7 @@
                         </li>
                         <li>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/user">Account Setting</a>
+                            <a class="dropdown-item" href="/profile">Account Setting</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ route('logout')}}">Logout</a>
 
