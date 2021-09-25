@@ -23,9 +23,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="swal-alert @if (session()->has('success')) ready @endif">
-
-                </div>
+                
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">

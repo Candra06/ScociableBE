@@ -9,7 +9,6 @@
                     <h2 class="text-white pb-2 fw-bold">User Profile</h2>
                     <h5 class="text-white op-7 mb-2">Sociable Admin</h5>
                 </div>
-
             </div>
         </div>
     </div>

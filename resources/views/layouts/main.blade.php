@@ -33,6 +33,7 @@
 	<link rel="stylesheet" href="{{asset('assets/css/demo.css')}}">
 </head>
 <body>
+	<div class="swal-alert @if (session()->has('success')) ready @endif"></div>
 	<div class="wrapper">
 		<div class="main-header">
 			<!-- Logo Header -->
@@ -176,13 +177,6 @@
 			
 		
 	<script>
-		@if(Route::is('artikel'))
-
-		// edit
-		@if (isset($artikel))
-			$("#edit").summernote("code", `{!! $artikel->description !!}`);
-		@endif
-				// success artikel
 		var check = $('.swal-alert').is('.ready');
 		if(check){
 			swal("{{ session('success') }}", {
@@ -193,91 +187,135 @@
 				},
 			});
 		}
-		function readArtikel(){
+
+		@if(Route::is('artikel'))
+
+
+
+			function readArtikel(){
+				$('#add-row').DataTable({
+			
+					"pageLength": 10,
+					"bLengthChange": true,
+					"bFilter": true,
+					"bInfo": true,
+					"processing":true,
+					"bServerSide": true,
+					"order": [[ 1, "asc" ]],
+					'ajax' : {
+						url: "{{ url('artikel/fetch') }}",
+						type: "POST",
+						data: function(d) {
+							d._token = "{{ csrf_token() }}"
+						}
+					},
+					columns:[
+						{ data: 'title', name: 'title' },
+						{ data: 'user.username', name: 'publisher' },
+						{ data: 'status', name: 'status' },
+						{ 
+							"class" : "text-center text-nowrap",
+							"render": function(data, type, row, meta){
+								return `<div class="form-button-action">
+														<a href="/artikel/show/${row.id}" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-success btn-lg" data-original-title="Show Artikel">
+															<i class="fas fa-eye"></i>
+														</a>
+														<a href="/artikel/edit/${row.id}" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Artikel">
+															<i class="fa fa-edit"></i>
+														</a>
+														<form action="" method="post">
+
+															<input type="hidden" name="id" value="${row.id}">
+															<a href="artikel/${row.id}" data-toggle="tooltip" title="" id="hapus" class="btn btn-link btn-danger" data-id="${row.id}"  data-original-title="Remove">
+																<i class="fa fa-times"></i>
+															</a>
+															</form>
+															</div>`;
+							} 
+						},
+					]
+				});
+			}
+			
+			$(document).ready(function(){
+				readArtikel();
+			});
+
+			$("body").on("click","#hapus",function(e){
+				e.preventDefault();
+				var id = $(this).data('id');
+				swal({
+					title: `Are you sure you want to delete this record?`,
+					text: "If you delete this, it will be gone forever.",
+					icon: "warning",
+					buttons: true,
+					dangerMode: true,
+				})
+				.then((willDelete) => {
+					if (willDelete) {
+						console.log($(this).data('id'))
+
+						$.ajax({
+							url: "{{ url('/artikel/') }}/"+id,
+							method: "DELETE",
+							data: {
+								_token : "{{ csrf_token() }}",
+								id
+							},
+							success: function(result){
+								if(result.message){
+									var oTable = $('#add-row').dataTable();
+									oTable.fnDraw(false);
+								}
+							}
+						})
+					}
+				});
+			});
+		@endif
+
+		@if (Route::is('dashboard'))
 			$('#add-row').DataTable({
-		
-				"pageLength": 5,
+				"pageLength": 10,
 				"bLengthChange": true,
 				"bFilter": true,
 				"bInfo": true,
 				"processing":true,
 				"bServerSide": true,
 				"order": [[ 1, "asc" ]],
-				'ajax' : {
-					url: "{{ url('artikel/fetch') }}",
-					type: "POST",
-					data: function(d) {
-						d._token = "{{ csrf_token() }}"
-					}
-				},
-				columns:[
-					{ data: 'title', name: 'title' },
-					{ data: 'user.username', name: 'publisher' },
-					{ data: 'status', name: 'status' },
-					{ 
-						"class" : "text-center text-nowrap",
-						"render": function(data, type, row, meta){
-							return `<div class="form-button-action">
-													<a href="/artikel/show/${row.id}" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-success btn-lg" data-original-title="Show Artikel">
-														<i class="fas fa-eye"></i>
-													</a>
-													<a href="/artikel/edit/${row.id}" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Artikel">
-														<i class="fa fa-edit"></i>
-													</a>
-													<form action="" method="post">
-
-														<input type="hidden" name="id" value="${row.id}">
-														<a href="artikel/${row.id}" data-toggle="tooltip" title="" id="hapus" class="btn btn-link btn-danger" data-id="${row.id}"  data-original-title="Remove">
-															<i class="fa fa-times"></i>
-														</a>
-														</form>
-														</div>`;
-						} 
-					},
-				]
-			});
-		}
-		
-		$(document).ready(function(){
-			readArtikel();
-		});
-
-		$("body").on("click","#hapus",function(e){
-			e.preventDefault();
-			var id = $(this).data('id');
-			swal({
-				title: `Are you sure you want to delete this record?`,
-				text: "If you delete this, it will be gone forever.",
-				icon: "warning",
-				buttons: true,
-				dangerMode: true,
-			})
-			.then((willDelete) => {
-				if (willDelete) {
-					console.log($(this).data('id'))
-
-					$.ajax({
-						url: "{{ url('/artikel/') }}/"+id,
-						method: "DELETE",
-						data: {
-							_token : "{{ csrf_token() }}",
-							id
-						},
-						success: function(result){
-							if(result.message){
-								var oTable = $('#add-row').dataTable();
-								oTable.fnDraw(false);
-							}
-						}
-					})
+				"ajax" : {
+				url: "{{ url('/user/fetch') }}",
+				method: "POST",
+				data: function(d){
+					d._token = "{{ csrf_token() }}"
 				}
+			},
+			columns:[
+				{ data: 'username', name: 'username' },
+				{ data: 'email', name: 'email' },
+				{ data: 'role', name: 'role' },
+				{ 
+					"searchable" : false,
+					"orderable" : false,
+					"class" : "text-center text-nowrap",
+					"render": function(data, type, row, meta){
+						return `<div class="form-button-action">
+	
+								<button class="btn btn-link btn-success" data-id="${row.id}" data-type="Confirm" id="confirm"><i class="fa fa-eye"></i></button>
+								<button class="btn btn-link btn-primary" data-id="${row.id}" data-type="Confirm" id="confirm"><i class="fa fa-edit"></i></button>
+								<button class="btn btn-link btn-danger ml-2" data-id="${row.id}" data-type="Decline" id="decline"><i class="fa fa-times"></i></button>
+
+									</div>`;
+								} 
+							},
+						]
+					
 			});
-		});
 		@endif
 
 		@if (Route::is('membership'))
 		$('#add-row').DataTable({
-			"pageLength": 5,
+			"pageLength": 10,
 			"bLengthChange": true,
 			"bFilter": true,
 			"bInfo": true,
@@ -294,7 +332,16 @@
 			columns:[
 				{ data: 'user.username', name: 'username' },
 				{ data: 'amount', name: 'amount' },
-				{ data: 'proof_payment', name: 'proof payment' },
+				{ 
+					class: "text-center text-nowrap",
+					render: function(data, tyoe, row, meta){
+							return `
+							<a href="{{ url('/') }}/bukti/${row.proof_payment}" target="_blank" class="btn btn-round btn-success btn-sm">
+                                    <i class="fas fa-eye my-auto"></i>
+							</a>
+							`;
+						} 
+				},
 				// { data: 'payment_status', name: 'payment status' },
 				{
 					render: function(data, type, row, meta){
@@ -374,6 +421,81 @@
 			});
 		@endif
 
+
+		@if(Route::is('challenge'))
+			$('#add-row').DataTable({
+				"pageLength": 10,
+				"bLengthChange": true,
+				"bFilter": true,
+				"bInfo": true,
+				"processing":true,
+				"bServerSide": true,
+				"order": [[ 1, "asc" ]],
+				"ajax" : {
+					url: "{{ url('/challenge/fetch') }}",
+					method: "POST",
+					data: function(d){
+						d._token = "{{ csrf_token() }}"
+					}
+				},
+				columns:[
+					{ data: 'day', name: 'Day' },
+					{ data: 'level_diagnosa', name: 'level diagnosa' },
+					{ data: 'content', name: 'content' },
+					{ data: 'description', name: 'description' },
+					{ 
+						"class" : "text-center text-nowrap",
+						"render": function(data, type, row, meta){
+							return `<div class="form-button-action">
+													<a href="/challenge/show/${row.id}" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-success btn-lg" data-original-title="Show challenge">
+														<i class="fas fa-eye"></i>
+													</a>
+													<a href="/challenge/edit/${row.id}" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit challenge">
+														<i class="fa fa-edit"></i>
+													</a>
+													<form action="" method="post">
+
+														<input type="hidden" name="id" value="${row.id}">
+														<a href="challenge/${row.id}" data-toggle="tooltip" title="" id="hapus" class="btn btn-link btn-danger" data-id="${row.id}"  data-original-title="Remove">
+															<i class="fa fa-times"></i>
+														</a>
+														</form>
+														</div>`;
+						}
+					}
+				]
+			});
+			$("body").on("click","#hapus",function(e){
+				e.preventDefault();
+				var id = $(this).data('id');
+				swal({
+					title: `Are you sure you want to delete this record?`,
+					text: "If you delete this, it will be gone forever.",
+					icon: "warning",
+					buttons: true,
+					dangerMode: true,
+				})
+				.then((willDelete) => {
+					if (willDelete) {
+						console.log($(this).data('id'))
+						$.ajax({
+							url: "{{ url('/challenge/') }}/"+id,
+							method: "DELETE",
+							data: {
+								_token : "{{ csrf_token() }}",
+								id
+							},
+							success: function(result){
+								if(result.message){
+									var oTable = $('#add-row').dataTable();
+									oTable.fnDraw(false);
+								}
+							}
+						})
+					}
+				});
+			});
+		@endif
 	</script>
 </body>
 </html>
