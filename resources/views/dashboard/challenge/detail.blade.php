@@ -4,9 +4,8 @@
 
 <div class="content">
     <div class="page-inner  ">
-
         <div class="page-header">
-            <h4 class="page-title">Menu Artikel</h4>
+            <h4 class="page-title">Menu Challenge</h4>
             <ul class="breadcrumbs">
                 <li class="nav-home">
                     <a href="{{ url('/') }}">
@@ -17,7 +16,7 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('/artikel') }}">artikel</a>
+                    <a href="{{ url('/challenge') }}">Challenge</a>
                 </li>
 
      
@@ -29,27 +28,30 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h4 class="card-title">{{ $artikel->title }}</h4>
-
-
+                            <h4 class="card-title">Challenge</h4>
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-start">
                             <div class="col-md-8 px-auto">
-                                <div class="embed-responsive embed-responsive-16by9">
-
-                                    <iframe class="embed-responsive-item"  
-                                     src="http://www.youtube.com/embed/{{ $artikel->url }}" 
-                                     align="center" id="videothumbnail"></iframe>
-                              
-                                     </div>
+                                <h4>Day : {{ $challenge['day'] }}</h4>
+                                <h4>Level Diagnosa : {{ $challenge['level_diagnosa'] }}</h4>
                             </div>
                         </div>
-                        <div class="row justify-content-center mt-5">
+                        <div class="row mt-4">
                             <div class="col-md-8">
-
-                                {!! $artikel->description !!}
+                                <h4 class="card-title">Content</h4>
+                                <div class="content">
+                                    {!! $challenge['content'] !!}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-md-8">
+                                <h4 class="card-title">Description</h4>
+                                <div class="content">
+                                    {!! $challenge['description'] !!}
+                                </div>
                             </div>
                         </div>
                         

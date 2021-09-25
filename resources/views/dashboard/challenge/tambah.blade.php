@@ -4,7 +4,7 @@
 <div class="content">
     <div class="page-inner  ">
         <div class="page-header">
-            <h4 class="page-title">Menu Artikel</h4>
+            <h4 class="page-title">Menu Challenge</h4>
             <ul class="breadcrumbs">
                 <li class="nav-home">
                     <a href="{{ url('/') }}">
@@ -15,8 +15,10 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('/artikel') }}">Artikel</a>
-                </li>     
+                    <a href="{{ url('/challenge') }}">Challenge</a>
+                </li>
+
+     
             </ul>
         </div>
         <div class="row">
@@ -28,32 +30,35 @@
 
                         </div>
                     </div>
-                    <form action="/artikel/tambah" method="post" enctype="multipart/form-data">
+                    <form action="/challenge/store" method="post">
                         @csrf
                         <div class="card-body">
                             <div class="form-group form-floating-label">
-                                <input id="inputFloatingLabel" type="text" name="title" class="form-control input-border-bottom" required="">
-                                <label for="inputFloatingLabel" class="placeholder">Title</label>
-                            </div>
-                            <div class="form-group form-floating-label">
-                                <input id="inputFloatingLabel" type="text" name="url" class="form-control input-border-bottom" required="">
-                                <label for="inputFloatingLabel" class="placeholder">Url Youtube</label>
-                            </div>
-                            <div class="form-group form-floating-label">
-                                <select class="form-control input-border-bottom" name="status" id="selectFloatingLabel" required="">
+                                <select class="form-control input-border-bottom" name="day" id="selectFloatingLabel" required="">
                                     <option value="">&nbsp;</option>
-                                    <option value="Premium">Premium</option>
-                                    <option value="Biasa">Biasa</option>
+                                    @for ($i = 1; $i <= 31; $i++)
+                                        <option value="{{ $i }}">{{ $i }}</option>
+                                    @endfor
                                 </select>
-                                <label for="selectFloatingLabel" class="placeholder">Status</label>
+                                <label for="selectFloatingLabel" class="placeholder">Day</label>
+                            </div>
+                            <div class="form-group form-floating-label">
+                                <select class="form-control input-border-bottom" name="level_diagnosa" id="selectFloatingLabel" required="">
+                                    <option value="">&nbsp;</option>
+                                    @for ($i = 0; $i < count($level_diagnosa); $i++)
+                                        
+                                        <option value="{{ $level_diagnosa[$i] }}">{{ $level_diagnosa[$i] }}</option>
+                                    @endfor
+                                </select>
+                                <label for="selectFloatingLabel" class="placeholder">Level Diagnosa</label>
+                            </div>
+                            <div class="form-group form-floating-label">
+                                <label for="content">Content</label>
+                                <textarea name="content" id="content" style="display: none;"></textarea>
                             </div>
                             <div class="form-group fill">
                                 <label for="description">Deskripsi</label>
-                                <textarea name="description" name="description" id="description" style="display: none;"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleFormControlFile1">Example file input</label>
-                                <input type="file" class="form-control-file" name="thumbnail" required id="exampleFormControlFile1">
+                                <textarea name="description" id="description" style="display: none;"></textarea>
                             </div>
                         </div>
                         <div class="card-action">

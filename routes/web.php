@@ -55,7 +55,13 @@ Route::middleware('auth')->group(function () {
     // challenge
     Route::prefix('challenge')->name('challenge')->group(function() {
         Route::get('/', [ChallengeController::class, 'index'] );
+        Route::get('/create', [ChallengeController::class, 'create'] );
+        Route::get('/show/{id}', [ChallengeController::class, 'show'] );
+        Route::get('/edit/{id}', [ChallengeController::class, 'edit'] );
+        Route::post('/store', [ChallengeController::class, 'store'] );
+        Route::post('/update', [ChallengeController::class, 'update'] );
         Route::post('/fetch', [ChallengeController::class, 'fetch'] );
+        Route::delete('/{id}', [ChallengeController::class, 'destroy']);
         
     });
 
@@ -64,6 +70,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [MembershipController::class, 'index']);
         Route::post('/fetch', [MembershipController::class, 'fetch']);
         Route::post('/update', [MembershipController::class, 'update']);
+        
 
     });
 
