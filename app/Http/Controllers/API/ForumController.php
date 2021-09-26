@@ -17,7 +17,9 @@ class ForumController extends Controller
      */
     public function index()
     {
-        $data = Forum::all();
+        $data = Forum::leftJoin('users', 'users.id', 'forum.created_by')
+        ->select('forum.*', 'users.username as name')
+        ->get();
         if ($data) {
             return response()->json([
                 'status' => true,
