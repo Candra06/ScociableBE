@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth:api'], function(){
         Route::post('store', 'API\MembershipController@store');
     });
     Route::prefix('forum')->group(function () {
-        Route::post('store', 'API\ForumController@store');
+        Route::post('post', 'API\ForumController@store');
         Route::get('all', 'API\ForumController@index');
         Route::get('detail/{id}', 'API\ForumController@show');
         Route::post('reply/{id}', 'API\ForumController@reply');
@@ -34,5 +34,17 @@ Route::group(['middleware' => 'auth:api'], function(){
         Route::get('unlike/{id}', 'API\ForumController@unlikes');
         Route::get('likeReply/{id}', 'API\ForumController@likesReply');
         Route::get('unlikeReply/{id}', 'API\ForumController@unlikesReply');
+    });
+
+    Route::prefix('challenge')->group(function () {
+        Route::get('show', 'API\ChallengeController@showListChallenge');
+        Route::get('detail/{id}', 'API\ChallengeController@detailChallenge');
+        Route::get('insert', 'API\ChallengeController@useChallenge');
+        Route::get('finish/{id}', 'API\ChallengeController@update');
+    });
+
+    Route::prefix('diagnosa')->group(function () {
+        Route::get('show', 'API\DiagnosaController@show');
+        Route::post('diagnosaUser', 'API\DiagnosaController@diagnosaUser');
     });
 });
