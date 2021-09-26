@@ -19,13 +19,8 @@
                     <div class="collapse in" id="collapseExample">
                         <ul class="nav">
                             <li>
-                                <a href="#profile">
+                                <a href="/profile">
                                     <span class="link-collapse">My Profile</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#edit">
-                                    <span class="link-collapse">Edit Profile</span>
                                 </a>
                             </li>
                             
@@ -59,13 +54,14 @@
                         <p>Menu Artikel</p>
                     </a>
                 </li>
-
                 <li class="nav-item @if(Route::is('challenge') ) {{ __('active')}} @endif">
                     <a href="/challenge">
                         <i class="fas fa-tasks"></i>
                         <p>Menu Challenge</p>
+                        
                     </a>
                 </li>
+
                 <li class="nav-item @if(Route::is('membership') ) {{ __('active')}} @endif">
                     <a href="/membership">
                         <i class="fas fa-users"></i>

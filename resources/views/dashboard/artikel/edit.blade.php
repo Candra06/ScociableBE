@@ -16,7 +16,9 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{ url('/artikel') }}">Artikel</a>
-                </li>     
+                </li>
+
+     
             </ul>
         </div>
         <div class="row">
@@ -28,32 +30,37 @@
 
                         </div>
                     </div>
-                    <form action="/artikel/tambah" method="post" enctype="multipart/form-data">
+                    <form action="/artikel/update" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
+                            <input type="hidden" name="id" value="{{ $artikel->id }}">
                             <div class="form-group form-floating-label">
-                                <input id="inputFloatingLabel" type="text" name="title" class="form-control input-border-bottom" required="">
+                                <input id="inputFloatingLabel" type="text" name="title" value="{{ $artikel->title }}" class="form-control input-border-bottom" required="">
                                 <label for="inputFloatingLabel" class="placeholder">Title</label>
                             </div>
                             <div class="form-group form-floating-label">
-                                <input id="inputFloatingLabel" type="text" name="url" class="form-control input-border-bottom" required="">
+                                <input id="inputFloatingLabel" type="text" name="url" value="{{ $artikel->url }}" class="form-control input-border-bottom" required="">
                                 <label for="inputFloatingLabel" class="placeholder">Url Youtube</label>
                             </div>
                             <div class="form-group form-floating-label">
                                 <select class="form-control input-border-bottom" name="status" id="selectFloatingLabel" required="">
                                     <option value="">&nbsp;</option>
-                                    <option value="Premium">Premium</option>
-                                    <option value="Biasa">Biasa</option>
+                                    <option value="Premium" @if ( $artikel->status == 'Premium') selected @endif>Premium</option>
+                                    <option value="Biasa" @if ( $artikel->status == 'Biasa') selected @endif>Biasa</option>
                                 </select>
                                 <label for="selectFloatingLabel" class="placeholder">Status</label>
                             </div>
                             <div class="form-group fill">
                                 <label for="description">Deskripsi</label>
-                                <textarea name="description" name="description" id="description" style="display: none;"></textarea>
+                                <textarea name="description" name="description" id="edit" style="display: none;"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <img src="{{ url($artikel->thumbnail) }}" width="400" alt="gambar">
+                                <input type="hidden" name="thumbnail" value="{{ $artikel->thumbnail }}">
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlFile1">Example file input</label>
-                                <input type="file" class="form-control-file" name="thumbnail" required id="exampleFormControlFile1">
+                                <input type="file" class="form-control-file" name="thumbnail" id="exampleFormControlFile1">
                             </div>
                         </div>
                         <div class="card-action">

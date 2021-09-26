@@ -33,6 +33,7 @@
 	<link rel="stylesheet" href="{{asset('assets/css/demo.css')}}">
 </head>
 <body>
+	<div class="swal-alert @if (session()->has('success')) ready @endif"></div>
 	<div class="wrapper">
 		<div class="main-header">
 			<!-- Logo Header -->
@@ -69,120 +70,11 @@
 			@yield('container')
 		</div>
 		
-		<!-- Custom template | don't include it in your project! -->
-		<div class="custom-template">
-			<div class="title">Settings</div>
-			<div class="custom-content">
-				<div class="switcher">
-					<div class="switch-block">
-						<h4>Logo Header</h4>
-						<div class="btnSwitch">
-							<button type="button" class="changeLogoHeaderColor" data-color="dark"></button>
-							<button type="button" class="selected changeLogoHeaderColor" data-color="blue"></button>
-							<button type="button" class="changeLogoHeaderColor" data-color="purple"></button>
-							<button type="button" class="changeLogoHeaderColor" data-color="light-blue"></button>
-							<button type="button" class="changeLogoHeaderColor" data-color="green"></button>
-							<button type="button" class="changeLogoHeaderColor" data-color="orange"></button>
-							<button type="button" class="changeLogoHeaderColor" data-color="red"></button>
-							<button type="button" class="changeLogoHeaderColor" data-color="white"></button>
-							<br/>
-							<button type="button" class="changeLogoHeaderColor" data-color="dark2"></button>
-							<button type="button" class="changeLogoHeaderColor" data-color="blue2"></button>
-							<button type="button" class="changeLogoHeaderColor" data-color="purple2"></button>
-							<button type="button" class="changeLogoHeaderColor" data-color="light-blue2"></button>
-							<button type="button" class="changeLogoHeaderColor" data-color="green2"></button>
-							<button type="button" class="changeLogoHeaderColor" data-color="orange2"></button>
-							<button type="button" class="changeLogoHeaderColor" data-color="red2"></button>
-						</div>
-					</div>
-					<div class="switch-block">
-						<h4>Navbar Header</h4>
-						<div class="btnSwitch">
-							<button type="button" class="changeTopBarColor" data-color="dark"></button>
-							<button type="button" class="changeTopBarColor" data-color="blue"></button>
-							<button type="button" class="changeTopBarColor" data-color="purple"></button>
-							<button type="button" class="changeTopBarColor" data-color="light-blue"></button>
-							<button type="button" class="changeTopBarColor" data-color="green"></button>
-							<button type="button" class="changeTopBarColor" data-color="orange"></button>
-							<button type="button" class="changeTopBarColor" data-color="red"></button>
-							<button type="button" class="changeTopBarColor" data-color="white"></button>
-							<br/>
-							<button type="button" class="changeTopBarColor" data-color="dark2"></button>
-							<button type="button" class="selected changeTopBarColor" data-color="blue2"></button>
-							<button type="button" class="changeTopBarColor" data-color="purple2"></button>
-							<button type="button" class="changeTopBarColor" data-color="light-blue2"></button>
-							<button type="button" class="changeTopBarColor" data-color="green2"></button>
-							<button type="button" class="changeTopBarColor" data-color="orange2"></button>
-							<button type="button" class="changeTopBarColor" data-color="red2"></button>
-						</div>
-					</div>
-					<div class="switch-block">
-						<h4>Sidebar</h4>
-						<div class="btnSwitch">
-							<button type="button" class="selected changeSideBarColor" data-color="white"></button>
-							<button type="button" class="changeSideBarColor" data-color="dark"></button>
-							<button type="button" class="changeSideBarColor" data-color="dark2"></button>
-						</div>
-					</div>
-					<div class="switch-block">
-						<h4>Background</h4>
-						<div class="btnSwitch">
-							<button type="button" class="changeBackgroundColor" data-color="bg2"></button>
-							<button type="button" class="changeBackgroundColor selected" data-color="bg1"></button>
-							<button type="button" class="changeBackgroundColor" data-color="bg3"></button>
-							<button type="button" class="changeBackgroundColor" data-color="dark"></button>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="custom-toggle">
-				<i class="flaticon-settings"></i>
-			</div>
-		</div>
-		<!-- End Custom template -->
 	</div>
-	<!--   Core JS Files   -->
-	<script src="{{asset('assets/js/core/jquery.3.2.1.min.js')}}"></script>
-	<script src="{{asset('assets/js/core/popper.min.js')}}"></script>
-	<script src="{{asset('assets/js/core/bootstrap.min.js')}}"></script>
 
-	<!-- jQuery UI -->
-	<script src="{{asset('assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js')}}"></script>
-	<script src="{{asset('assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js')}}"></script>
+	@include('partials.script')
 
-	<!-- jQuery Scrollbar -->
-	<script src="{{asset('assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js')}}"></script>
-
-
-	<!-- Chart JS -->
-	<script src="{{asset('assets/js/plugin/chart.js/chart.min.js')}}"></script>
-
-	<!-- jQuery Sparkline -->
-	<script src="{{asset('assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js')}}"></script>
-
-	<!-- Chart Circle -->
-	<script src="{{asset('assets/js/plugin/chart-circle/circles.min.js')}}"></script>
-
-	<!-- Datatables -->
-	<script src="{{asset('assets/js/plugin/datatables/datatables.min.js')}}"></script>
-
-	<!-- Bootstrap Notify -->
-	{{-- <script src="{{asset('assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js')}}"></script> --}}
-
-	<!-- jQuery Vector Maps -->
-	<script src="{{asset('assets/js/plugin/jqvmap/jquery.vmap.min.js')}}"></script>
-	<script src="{{asset('assets/js/plugin/jqvmap/maps/jquery.vmap.world.js')}}"></script>
-
-	<!-- Sweet Alert -->
-	<script src="{{asset('assets/js/plugin/sweetalert/sweetalert.min.js')}}"></script>
-
-	<!-- Atlantis JS -->
-	<script src="{{asset('assets/js/atlantis.min.js')}}"></script>
-	<script src="{{ asset('assets/summernote/summernote-bs4.js')}}"></script>
-	<!-- Atlantis DEMO methods, don't include it in your project! -->
-	<script src="{{asset('assets/js/setting-demo.js')}}"></script>
-	<script src="{{asset('assets/js/demo.js')}}"></script>
-	<script>
+	{{-- <script>
 		Circles.create({
 			id:'circles-1',
 			radius:45,
@@ -275,24 +167,15 @@
 			lineColor: '#ffa534',
 			fillColor: 'rgba(255, 165, 52, .14)'
 		});
-	</script>
+	</script> --}}
 
 
-	<script>
-		$('#description').summernote({
-		tabsize: 2,
-		height: 120,
-		toolbar: [
-			['style', ['style']],
-			['font', ['bold', 'underline', 'clear']],
-			['color', ['color']],
-			['para', ['ul', 'ol', 'paragraph']],
-			['table', ['table']],
-			['insert', ['link', 'picture', 'video']],
-			['view', ['fullscreen', 'codeview', 'help']]
-		]
-		});
-	</script>
+	<script src="{{ asset('assets/js/script.js') }}"></script>
+
+
+		
+			
+		
 	<script>
 		var check = $('.swal-alert').is('.ready');
 		if(check){
@@ -304,6 +187,315 @@
 				},
 			});
 		}
+
+		@if(Route::is('artikel'))
+
+
+
+			function readArtikel(){
+				$('#add-row').DataTable({
+			
+					"pageLength": 10,
+					"bLengthChange": true,
+					"bFilter": true,
+					"bInfo": true,
+					"processing":true,
+					"bServerSide": true,
+					"order": [[ 1, "asc" ]],
+					'ajax' : {
+						url: "{{ url('artikel/fetch') }}",
+						type: "POST",
+						data: function(d) {
+							d._token = "{{ csrf_token() }}"
+						}
+					},
+					columns:[
+						{ data: 'title', name: 'title' },
+						{ data: 'user.username', name: 'publisher' },
+						{ data: 'status', name: 'status' },
+						{ 
+							"class" : "text-center text-nowrap",
+							"render": function(data, type, row, meta){
+								return `<div class="form-button-action">
+														<a href="/artikel/show/${row.id}" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-success btn-lg" data-original-title="Show Artikel">
+															<i class="fas fa-eye"></i>
+														</a>
+														<a href="/artikel/edit/${row.id}" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Artikel">
+															<i class="fa fa-edit"></i>
+														</a>
+														<form action="" method="post">
+
+															<input type="hidden" name="id" value="${row.id}">
+															<a href="artikel/${row.id}" data-toggle="tooltip" title="" id="hapus" class="btn btn-link btn-danger" data-id="${row.id}"  data-original-title="Remove">
+																<i class="fa fa-times"></i>
+															</a>
+															</form>
+															</div>`;
+							} 
+						},
+					]
+				});
+			}
+			
+			$(document).ready(function(){
+				readArtikel();
+			});
+
+			$("body").on("click","#hapus",function(e){
+				e.preventDefault();
+				var id = $(this).data('id');
+				swal({
+					title: `Are you sure you want to delete this record?`,
+					text: "If you delete this, it will be gone forever.",
+					icon: "warning",
+					buttons: true,
+					dangerMode: true,
+				})
+				.then((willDelete) => {
+					if (willDelete) {
+						console.log($(this).data('id'))
+
+						$.ajax({
+							url: "{{ url('/artikel/') }}/"+id,
+							method: "DELETE",
+							data: {
+								_token : "{{ csrf_token() }}",
+								id
+							},
+							success: function(result){
+								if(result.message){
+									var oTable = $('#add-row').dataTable();
+									oTable.fnDraw(false);
+								}
+							}
+						})
+					}
+				});
+			});
+		@endif
+
+		@if (Route::is('dashboard'))
+			$('#add-row').DataTable({
+				"pageLength": 10,
+				"bLengthChange": true,
+				"bFilter": true,
+				"bInfo": true,
+				"processing":true,
+				"bServerSide": true,
+				"order": [[ 1, "asc" ]],
+				"ajax" : {
+				url: "{{ url('/user/fetch') }}",
+				method: "POST",
+				data: function(d){
+					d._token = "{{ csrf_token() }}"
+				}
+			},
+			columns:[
+				{ data: 'username', name: 'username' },
+				{ data: 'email', name: 'email' },
+				{ data: 'role', name: 'role' },
+				{ 
+					"searchable" : false,
+					"orderable" : false,
+					"class" : "text-center text-nowrap",
+					"render": function(data, type, row, meta){
+						return `<div class="form-button-action">
+	
+								<button class="btn btn-link btn-success" data-id="${row.id}" data-type="Confirm" id="confirm"><i class="fa fa-eye"></i></button>
+								<button class="btn btn-link btn-primary" data-id="${row.id}" data-type="Confirm" id="confirm"><i class="fa fa-edit"></i></button>
+								<button class="btn btn-link btn-danger ml-2" data-id="${row.id}" data-type="Decline" id="decline"><i class="fa fa-times"></i></button>
+
+									</div>`;
+								} 
+							},
+						]
+					
+			});
+		@endif
+
+		@if (Route::is('membership'))
+		$('#add-row').DataTable({
+			"pageLength": 10,
+			"bLengthChange": true,
+			"bFilter": true,
+			"bInfo": true,
+			"processing":true,
+			"bServerSide": true,
+			"order": [[ 1, "asc" ]],
+			"ajax" : {
+				url: "{{ url('/membership/fetch') }}",
+				method: "POST",
+				data: function(d){
+					d._token = "{{ csrf_token() }}"
+				}
+			},
+			columns:[
+				{ data: 'user.username', name: 'username' },
+				{ data: 'amount', name: 'amount' },
+				{ 
+					class: "text-center text-nowrap",
+					render: function(data, tyoe, row, meta){
+							return `
+							<a href="{{ url('/') }}/bukti/${row.proof_payment}" target="_blank" class="btn btn-round btn-success btn-sm">
+                                    <i class="fas fa-eye my-auto"></i>
+							</a>
+							`;
+						} 
+				},
+				// { data: 'payment_status', name: 'payment status' },
+				{
+					render: function(data, type, row, meta){
+						var kelas = '';
+						if(row.payment_status == 'Pending'){
+							kelas = 'badge rounded-pill bg-warning text-white';
+						}else if(row.payment_status == 'Confirm'){
+							kelas = 'badge rounded-pill bg-success text-white';
+							
+						}else{
+							kelas = 'badge rounded-pill bg-danger text-white';
+
+						}
+						return `<span class="${kelas}">${row.payment_status}</span>`;
+					}
+				},
+				{ 
+					"class" : "text-center text-nowrap",
+					"render": function(data, type, row, meta){
+						return `<div class="form-button-action">
+	
+								<button class="btn btn-icon btn-round btn-success" data-id="${row.id}" data-type="Confirm" id="confirm"><i class="fa fa-check"></i></button>
+								<button class="btn btn-icon btn-round btn-danger ml-2" data-id="${row.id}" data-type="Decline" id="decline"><i class="fa fa-times"></i></button>
+
+									</div>`;
+								} 
+							},
+						]
+					});
+					// <form action="/artikel/${row.id}" method="post">
+					// 	@csrf
+						
+					// 	<button type="submit" data-toggle="tooltip" title="" class="btn btn-link btn-danger hapus" data-original-title="Remove">
+					// 		<i class="fa fa-times"></i>
+					// 	</button>
+					// </form>
+
+			$('body').on('click', '#decline', function(){
+				console.log($(this).attr('data-id'));
+				console.log($(this).attr('data-type'));
+				const url = "{{ url('/membership/update') }}";
+				const id = $(this).attr('data-id');
+				const type = $(this).attr('data-type');
+				$.ajax({
+					url,
+					method: "POST",
+					data: {
+						_token : "{{ csrf_token() }}",
+						id,
+						type
+					},
+					success: function(result){
+						var oTable = $('#add-row').dataTable();
+						oTable.fnDraw(false);
+					}
+				})
+			});
+			$('body').on('click', '#confirm', function(){
+				console.log($(this).attr('data-id'));
+				console.log($(this).attr('data-type'));
+				const url = "{{ url('/membership/update') }}";
+				const id = $(this).attr('data-id');
+				const type = $(this).attr('data-type');
+				$.ajax({
+					url,
+					method: "POST",
+					data: {
+						_token : "{{ csrf_token() }}",
+						id,
+						type
+					},
+					success: function(result){
+						var oTable = $('#add-row').dataTable();
+						oTable.fnDraw(false);
+					}
+				})
+			});
+		@endif
+
+
+		@if(Route::is('challenge'))
+			$('#add-row').DataTable({
+				"pageLength": 10,
+				"bLengthChange": true,
+				"bFilter": true,
+				"bInfo": true,
+				"processing":true,
+				"bServerSide": true,
+				"order": [[ 1, "asc" ]],
+				"ajax" : {
+					url: "{{ url('/challenge/fetch') }}",
+					method: "POST",
+					data: function(d){
+						d._token = "{{ csrf_token() }}"
+					}
+				},
+				columns:[
+					{ data: 'day', name: 'Day' },
+					{ data: 'level_diagnosa', name: 'level diagnosa' },
+					{ data: 'content', name: 'content' },
+					{ data: 'description', name: 'description' },
+					{ 
+						"class" : "text-center text-nowrap",
+						"render": function(data, type, row, meta){
+							return `<div class="form-button-action">
+													<a href="/challenge/show/${row.id}" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-success btn-lg" data-original-title="Show challenge">
+														<i class="fas fa-eye"></i>
+													</a>
+													<a href="/challenge/edit/${row.id}" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit challenge">
+														<i class="fa fa-edit"></i>
+													</a>
+													<form action="" method="post">
+
+														<input type="hidden" name="id" value="${row.id}">
+														<a href="challenge/${row.id}" data-toggle="tooltip" title="" id="hapus" class="btn btn-link btn-danger" data-id="${row.id}"  data-original-title="Remove">
+															<i class="fa fa-times"></i>
+														</a>
+														</form>
+														</div>`;
+						}
+					}
+				]
+			});
+			$("body").on("click","#hapus",function(e){
+				e.preventDefault();
+				var id = $(this).data('id');
+				swal({
+					title: `Are you sure you want to delete this record?`,
+					text: "If you delete this, it will be gone forever.",
+					icon: "warning",
+					buttons: true,
+					dangerMode: true,
+				})
+				.then((willDelete) => {
+					if (willDelete) {
+						console.log($(this).data('id'))
+						$.ajax({
+							url: "{{ url('/challenge/') }}/"+id,
+							method: "DELETE",
+							data: {
+								_token : "{{ csrf_token() }}",
+								id
+							},
+							success: function(result){
+								if(result.message){
+									var oTable = $('#add-row').dataTable();
+									oTable.fnDraw(false);
+								}
+							}
+						})
+					}
+				});
+			});
+		@endif
 	</script>
 </body>
 </html>
