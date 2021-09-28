@@ -78,8 +78,11 @@ class ForumController extends Controller
      */
     public function show($id)
     {
-        $data = Forum::where('id', $id)->first();
-        $reply = ForumReply::where('id_reff', $id)->get();
+        $data = Forum::leftJoin('users', 'users.id', 'forum.created_by')
+        ->select('forum.*', 'users.username as name')->where('forum.id', $id)->first();
+        $reply = ForumReply::leftJoin('users', 'users.id', 'reply_forum.created_by')
+        ->select('reply_forum.*', 'users.username as name')
+        ->where('reply_forum.id_reff', $id)->get();
         if ($data) {
             return response()->json([
                 'status' => true,

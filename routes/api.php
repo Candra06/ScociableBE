@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('artikel/{id}', 'API\ArtikelController@detail');
     Route::prefix('membership')->group(function () {
         Route::post('store', 'API\MembershipController@store');
+        Route::get('get', 'API\UserController@getMembership');
     });
     Route::prefix('forum')->group(function () {
         Route::post('post', 'API\ForumController@store');

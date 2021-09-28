@@ -4,9 +4,12 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Membership;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Contracts\Validation\Validator as ValidationValidator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Validator;
 
 class UserController extends Controller
@@ -56,6 +59,17 @@ class UserController extends Controller
         $data = User::where('username', $username)->first();
         if ($data) {
             if (password_verify($password, $data->password)) {
+                $membership = Membership::where('id_user', $data->id)
+                ->where('payment_status', 'Confirm')
+                ->where('exp_date', '>', Carbon::now())
+                ->orderBy('created_at', 'DESC')
+                ->first();
+                if ($membership) {
+                    $success['membership'] = true;
+                }else{
+                    $success['membership'] = false;
+                }
+
                 $success['id'] = $data->id;
                 $success['username'] = $data->username;
                 $success['email'] = $data->email;
@@ -114,4 +128,27 @@ class UserController extends Controller
             'message' => 'Successfully logged out'
         ]);
     }
+
+    public function getMembership()
+    {
+        $membership = Membership::where('id_user', Auth::user()->id)
+        ->where('payment_status', 'Confirm')
+        ->where('exp_date', '>', Carbon::now())
+        ->orderBy('created_at', 'DESC')
+        ->first();
+        if ($membership) {
+            return response()->json([
+                'status' => true,
+                'message' => 'Successfully updated user!',
+                'data' => $membership,
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Failed updated user!'
+            ], 401);
+        }
+    }
+
+
 }
