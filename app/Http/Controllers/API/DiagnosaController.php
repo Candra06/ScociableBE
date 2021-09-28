@@ -35,6 +35,7 @@ class DiagnosaController extends Controller
 
         $poin = 0;
         $data = '';
+        $level='';
         for ($i = 0; $i < count($question); $i++) {
             $input['id_user'] = Auth::user()->id;
             $input['id_question'] = $question[$i];
@@ -46,14 +47,19 @@ class DiagnosaController extends Controller
         if ($poin <= 20) {
 
             $data = User::where('id', Auth::user()->id)->update(['level_diagnosa' => 'Bukan SAD']);
+            $level = 'Bukan SAD';
         } elseif ($poin <= 30) {
             $data = User::where('id', Auth::user()->id)->update(['level_diagnosa' => 'SAD Ringan']);
+            $level = 'SAD Ringan';
         } else  if ($poin <= 40) {
             $data = User::where('id', Auth::user()->id)->update(['level_diagnosa' => 'SAD Sedang']);
+            $level = 'SAD Sedang';
         } else if ($poin <= 50) {
             $data = User::where('id', Auth::user()->id)->update(['level_diagnosa' => 'SAD Berat']);
+            $level = 'SAD Berat';
         } else  if ($poin > 50) {
             $data = User::where('id', Auth::user()->id)->update(['level_diagnosa' => 'SAD Sangat Berat']);
+            $level = 'SAD Sangat Berat';
         }
 
 
@@ -61,7 +67,7 @@ class DiagnosaController extends Controller
             return response()->json([
                 'status' => true,
                 'poin' => $poin,
-                'data' => $data,
+                'data' => $level,
             ], 200);
         } else {
             return response()->json([
