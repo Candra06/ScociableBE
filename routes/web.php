@@ -5,7 +5,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChallengeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MembershipController;
+use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\Console\Question\Question;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,7 +64,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/update', [ChallengeController::class, 'update'] );
         Route::post('/fetch', [ChallengeController::class, 'fetch'] );
         Route::delete('/{id}', [ChallengeController::class, 'destroy']);
-        
+
     });
 
     // membership
@@ -70,11 +72,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [MembershipController::class, 'index']);
         Route::post('/fetch', [MembershipController::class, 'fetch']);
         Route::post('/update', [MembershipController::class, 'update']);
-        
-
     });
 
-    
+    Route::resource('question', 'QuestionController');
+
+
 });
 
 

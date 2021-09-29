@@ -1,5 +1,5 @@
 <!-- Sidebar -->
-<div class="sidebar sidebar-style-2">			
+<div class="sidebar sidebar-style-2">
     <div class="sidebar-wrapper scrollbar scrollbar-inner">
         <div class="sidebar-content">
             <div class="user">
@@ -23,7 +23,7 @@
                                     <span class="link-collapse">My Profile</span>
                                 </a>
                             </li>
-                            
+
                             <li>
                                 <a href="{{ route('logout') }}">
                                     <span class="link-collapse">Log out</span>
@@ -38,9 +38,9 @@
                     <a href="/">
                         <i class="fas fa-home"></i>
                         <p>Dashboard</p>
-                        
+
                     </a>
-           
+
                 </li>
                 <li class="nav-section">
                     <span class="sidebar-mini-icon">
@@ -58,7 +58,14 @@
                     <a href="/challenge">
                         <i class="fas fa-tasks"></i>
                         <p>Menu Challenge</p>
-                        
+
+                    </a>
+                </li>
+                <li class="nav-item @if(Route::is('question') ) {{ __('active')}} @endif">
+                    <a href="{{url('/question')}}">
+                        <i class="fas fa-tasks"></i>
+                        <p>Qusetions</p>
+
                     </a>
                 </li>
 
@@ -68,7 +75,7 @@
                         <p>Membership</p>
                     </a>
                 </li>
-                
+
             </ul>
         </div>
     </div>
