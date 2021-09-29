@@ -129,6 +129,22 @@ class UserController extends Controller
         ]);
     }
 
+    public function listPsikolog()
+    {
+        $data = User::where('role', 'Psikolog')->get();
+        if ($data) {
+            return response()->json([
+                'status' => true,
+                'data' => $data,
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => false,
+                'data' => 'Failed show forum',
+            ], 400);
+        }
+    }
+
     public function getMembership()
     {
         $membership = Membership::where('id_user', Auth::user()->id)

@@ -26,9 +26,14 @@ Route::group(['middleware' => 'auth:api'], function(){
         Route::post('store', 'API\MembershipController@store');
         Route::get('get', 'API\UserController@getMembership');
     });
+    Route::prefix('konsultasi')->group(function () {
+        Route::post('store', 'API\MembershipController@store');
+        Route::get('listPsikolog', 'API\UserController@listPsikolog');
+    });
     Route::prefix('forum')->group(function () {
         Route::post('post', 'API\ForumController@store');
         Route::get('all', 'API\ForumController@index');
+        Route::get('history', 'API\ForumController@history');
         Route::get('detail/{id}', 'API\ForumController@show');
         Route::post('reply/{id}', 'API\ForumController@reply');
         Route::get('like/{id}', 'API\ForumController@likes');

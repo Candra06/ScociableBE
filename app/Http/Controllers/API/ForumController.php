@@ -33,6 +33,25 @@ class ForumController extends Controller
         }
     }
 
+    public function history()
+    {
+        $data = Forum::leftJoin('users', 'users.id', 'forum.created_by')
+        ->where('forum.created_by', Auth::user()->id)
+        ->select('forum.*', 'users.username as name')
+        ->get();
+        if ($data) {
+            return response()->json([
+                'status' => true,
+                'data' => $data,
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => false,
+                'data' => 'Failed show forum',
+            ], 400);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
