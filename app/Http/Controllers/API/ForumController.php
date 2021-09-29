@@ -19,6 +19,7 @@ class ForumController extends Controller
     {
         $data = Forum::leftJoin('users', 'users.id', 'forum.created_by')
         ->select('forum.*', 'users.username as name')
+        ->orderBy('created_at', 'DESC')
         ->get();
         if ($data) {
             return response()->json([
@@ -38,6 +39,7 @@ class ForumController extends Controller
         $data = Forum::leftJoin('users', 'users.id', 'forum.created_by')
         ->where('forum.created_by', Auth::user()->id)
         ->select('forum.*', 'users.username as name')
+        ->orderBy('created_at', 'DESC')
         ->get();
         if ($data) {
             return response()->json([

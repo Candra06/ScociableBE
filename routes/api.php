@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', 'API\UserController@login');
 Route::post('signup', 'API\UserController@signup');
 
+
 Route::group(['middleware' => 'auth:api'], function(){
     Route::post('update-profil', 'API\UserController@update');
     Route::post('signout', 'API\UserController@logout');
