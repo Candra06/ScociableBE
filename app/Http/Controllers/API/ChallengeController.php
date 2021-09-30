@@ -35,7 +35,7 @@ class ChallengeController extends Controller
     {
         $data = ChallengeUser::leftJoin('challenge', 'challenge.id', 'user_challenge.id_challenge')
             ->where('user_challenge.id', $id)
-            ->select('user_challenge.*', 'challenge.content')
+            ->select('user_challenge.*', 'challenge.content', 'challenge.description')
             ->first();
         if ($data) {
             return response()->json([
