@@ -28,7 +28,9 @@ Route::group(['middleware' => 'auth:api'], function(){
         Route::get('get', 'API\UserController@getMembership');
     });
     Route::prefix('konsultasi')->group(function () {
-        Route::post('store', 'API\MembershipController@store');
+        Route::get('room', 'API\KonsultasiController@index');
+        Route::get('detail/{id}', 'API\KonsultasiController@show');
+        Route::post('store', 'API\KonsultasiController@store');
         Route::get('listPsikolog', 'API\UserController@listPsikolog');
     });
     Route::prefix('forum')->group(function () {
@@ -52,6 +54,10 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     Route::prefix('diagnosa')->group(function () {
         Route::get('show', 'API\DiagnosaController@show');
+        Route::post('diagnosaUser', 'API\DiagnosaController@diagnosaUser');
+    });
+
+    Route::prefix('konsultasi')->group(function () {
         Route::post('diagnosaUser', 'API\DiagnosaController@diagnosaUser');
     });
 });

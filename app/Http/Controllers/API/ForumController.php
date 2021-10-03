@@ -7,6 +7,7 @@ use App\ForumReply;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ForumController extends Controller
 {
@@ -17,10 +18,26 @@ class ForumController extends Controller
      */
     public function index()
     {
-        $data = Forum::leftJoin('users', 'users.id', 'forum.created_by')
+        $data = [];
+        $tmp = Forum::leftJoin('users', 'users.id', 'forum.created_by')
         ->select('forum.*', 'users.username as name')
-        ->orderBy('created_at', 'DESC')
+        ->orderBy('forum.created_at', 'DESC')
         ->get();
+        $tmpData = [];
+        foreach ($tmp as $t) {
+            $count = ForumReply::where('id_reff', $t->id)->count();
+            $tmpData['id'] = $t->id;
+            $tmpData['topic'] = $t->topic;
+            $tmpData['content'] = $t->content;
+            $tmpData['likes'] = $t->likes;
+            $tmpData['created_by'] = $t->created_by;
+            $tmpData['anonim'] = $t->anonim;
+            $tmpData['created_at'] = $t->created_at;
+            $tmpData['updated_at'] = $t->updated_at;
+            $tmpData['name'] = $t->name;
+            $tmpData['replies'] =$count;
+            $data[] = $tmpData;
+        }
         if ($data) {
             return response()->json([
                 'status' => true,
