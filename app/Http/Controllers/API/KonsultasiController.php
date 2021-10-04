@@ -64,6 +64,7 @@ class KonsultasiController extends Controller
             // return $tmp;
 
         }
+        return $data;
         if ($data) {
             return response()->json([
                 'status' => true,
