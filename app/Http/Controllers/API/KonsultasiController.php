@@ -119,7 +119,7 @@ class KonsultasiController extends Controller
             $room['psikolog'] = $request->receiver;
             $room['kategori'] = $request->kategori;
             $send = KonsultasiRoom::create($room);
-            $detail['id_konsultasi'] = $send->id;
+            $detail['id_room'] = $send->id;
             $detail['sender'] = $request->sender;
             $detail['receiver'] = $request->receiver;
             $detail['message'] = $request->message;
