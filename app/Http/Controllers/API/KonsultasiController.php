@@ -149,17 +149,17 @@ class KonsultasiController extends Controller
      */
     public function show($id)
     {
-        $data = KonsultasiDetail::where('id_room', $id)->first();
-        if ($data) {
+        try {
+            $data = KonsultasiDetail::where('id_room', $id)->get();
             return response()->json([
                 'status' => true,
                 'data' => $data,
 
             ], 200);
-        } else {
+        } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
-                'data' => 'Failed show chat',
+                'data' => $th,
 
             ], 400);
         }
