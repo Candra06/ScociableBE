@@ -17,64 +17,63 @@ class KonsultasiController extends Controller
      */
     public function index()
     {
-        $role = Auth::user()->role;
-        $data = [];
-        // return $role;
-        if ($role == 'Psikolog') {
-            $room = KonsultasiRoom::where('psikolog', Auth::user()->id)->get();
-            $dat = [];
-            foreach ($room as $key) {
-                $dat[] = KonsultasiDetail::leftJoin('konsultasi_room', 'konsultasi_room.id', 'konsultasi_detail.id_room')
-                    ->leftJoin('users', 'users.id', 'konsultasi_room.user')
-                    ->where('konsultasi_detail.id_room', $key->id)
-                    ->select('users.username', 'users.id','konsultasi_detail.*')
-                    ->orderBy('konsultasi_detail.created_at', 'DESC')->first();
-            }
-            $tmp = [];
+        try {
+            $role = Auth::user()->role;
+            $data = [];
+            // return $role;
+            if ($role == 'Psikolog') {
+                $room = KonsultasiRoom::where('psikolog', Auth::user()->id)->get();
+                $dat = [];
+                foreach ($room as $key) {
+                    $dat[] = KonsultasiDetail::leftJoin('konsultasi_room', 'konsultasi_room.id', 'konsultasi_detail.id_room')
+                        ->leftJoin('users', 'users.id', 'konsultasi_room.user')
+                        ->where('konsultasi_detail.id_room', $key->id)
+                        ->select('users.username', 'users.id', 'konsultasi_detail.*')
+                        ->orderBy('konsultasi_detail.created_at', 'DESC')->first();
+                }
+                $tmp = [];
 
-            foreach ($dat as $key) {
-                $tmp['message'] = $key->message;
-                $tmp['username'] = $key->username;
-                $tmp['receiver'] = $key->id;
-                $tmp['id_room'] = $key->id_room;
-                $tmp['created_at'] = $key->created_at;
-                $data[] = $tmp;
-            }
-        } else {
-            $room = KonsultasiRoom::where('user', Auth::user()->id)->get();
-            $dat = [];
+                foreach ($dat as $key) {
+                    $tmp['message'] = $key->message;
+                    $tmp['username'] = $key->username;
+                    $tmp['receiver'] = $key->id;
+                    $tmp['id_room'] = $key->id_room;
+                    $tmp['created_at'] = $key->created_at;
+                    $data[] = $tmp;
+                }
+            } else {
+                $room = KonsultasiRoom::where('user', Auth::user()->id)->get();
+                $dat = [];
 
-            foreach ($room as $key) {
-                $dat[] = KonsultasiDetail::leftJoin('konsultasi_room', 'konsultasi_room.id', 'konsultasi_detail.id_room')
-                    ->leftJoin('users', 'users.id', 'konsultasi_room.psikolog')
-                    ->where('konsultasi_detail.id_room', $key->id)
-                    ->select('users.username', 'users.id','konsultasi_detail.*')
-                    ->orderBy('konsultasi_detail.created_at', 'DESC')->first();
-            }
-            $tmp = [];
-            // return $dat;
-            foreach ($dat as $key) {
-                $tmp['message'] = $key->message;
-                $tmp['username'] = $key->username;
-                $tmp['receiver'] = $key->id;
-                $tmp['id_room'] = $key->id_room;
-                $tmp['created_at'] = $key->created_at;
-                $data[] = $tmp;
-            }
-            // return $tmp;
+                foreach ($room as $key) {
+                    $dat[] = KonsultasiDetail::leftJoin('konsultasi_room', 'konsultasi_room.id', 'konsultasi_detail.id_room')
+                        ->leftJoin('users', 'users.id', 'konsultasi_room.psikolog')
+                        ->where('konsultasi_detail.id_room', $key->id)
+                        ->select('users.username', 'users.id', 'konsultasi_detail.*')
+                        ->orderBy('konsultasi_detail.created_at', 'DESC')->first();
+                }
+                $tmp = [];
+                // return $dat;
+                foreach ($dat as $key) {
+                    $tmp['message'] = $key->message;
+                    $tmp['username'] = $key->username;
+                    $tmp['receiver'] = $key->id;
+                    $tmp['id_room'] = $key->id_room;
+                    $tmp['created_at'] = $key->created_at;
+                    $data[] = $tmp;
+                }
+                // return $tmp;
 
-        }
-        return $data;
-        if ($data) {
+            }
             return response()->json([
                 'status' => true,
                 'data' => $data,
 
             ], 200);
-        } else {
+        } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
-                'data' => 'Failed show chat',
+                'message' => $th,
 
             ], 400);
         }
