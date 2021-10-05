@@ -101,14 +101,15 @@ class KonsultasiController extends Controller
             'sender' => 'required',
             'receiver' => 'required',
             'message' => 'required',
+            'id_room' => 'required',
         ]);
         // return $request;
         $data = '';
-        $cek = KonsultasiRoom::where('user', $request->sender)->orWhere('psikolog', $request->receiver)->first();
+            
         // return $cek;
-        if ($cek) {
+        if ($request->id_room != '-') {
 
-            $detail['id_room'] = $cek->id;
+            $detail['id_room'] = $request->id_room;
             $detail['sender'] = $request->sender;
             $detail['receiver'] = $request->receiver;
             $detail['message'] = $request->message;
