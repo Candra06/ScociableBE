@@ -45,7 +45,8 @@
                             <div id="add-row_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <table id="add-row" class="display table table-striped table-hover" cellspacing="0" width="100%">
+                                            <table id="basic-datatables"
+                                                class="display table table-striped table-hover">
                                             <thead>
                                                 <tr>
                                                     <th>Day</th>

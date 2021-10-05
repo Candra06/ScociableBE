@@ -42,8 +42,8 @@
                             <div id="add-row_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <table id="basic-datatabless"
-                                                    class="display table table-striped table-hover">
+                                            <table id="basic-datatables"
+                                                class="display table table-striped table-hover">
                                             <thead>
                                                 <tr>
                                                     <th>Title</th>
