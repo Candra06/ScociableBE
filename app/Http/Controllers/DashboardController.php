@@ -15,7 +15,8 @@ class DashboardController extends Controller
 
     public function list()
     {
-        return view('dashboard.user.list');
+        $user = User::all();
+        return view('dashboard.user.list', ['data' => $user]);
     }
     
     public function profile()

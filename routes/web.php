@@ -37,7 +37,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/profile', [DashboardController::class, 'profile']);
         Route::get('/user/tambah', [DashboardController::class, 'tambah']);
         Route::get('/user/list', [DashboardController::class, 'list']);
-        Route::post('/user/fetch', [DashboardController::class, 'fetch']);
         Route::post('/user/store', [DashboardController::class, 'store']);
         Route::post('/user/update', [DashboardController::class, 'update']);
     });
@@ -49,7 +48,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/show/{id}', [ArtikelController::class, 'show']);
         Route::get('edit/{id}', [ArtikelController::class, 'edit']);
         Route::get('tambah', [ArtikelController::class, 'tambah']);
-        Route::post('/fetch', [ArtikelController::class, 'fetch']);
         Route::post('update', [ArtikelController::class, 'update']);
         Route::post('tambah', [ArtikelController::class, 'store']);
         Route::delete('/{id}', [ArtikelController::class, 'delete']);
@@ -63,7 +61,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/{id}', [ChallengeController::class, 'edit'] );
         Route::post('/store', [ChallengeController::class, 'store'] );
         Route::post('/update', [ChallengeController::class, 'update'] );
-        Route::post('/fetch', [ChallengeController::class, 'fetch'] );
         Route::delete('/{id}', [ChallengeController::class, 'destroy']);
 
     });
@@ -71,7 +68,6 @@ Route::middleware('auth')->group(function () {
     // membership
     Route::prefix('membership')->name('membership')->group(function() {
         Route::get('/', [MembershipController::class, 'index']);
-        Route::post('/fetch', [MembershipController::class, 'fetch']);
         Route::post('/update', [MembershipController::class, 'update']);
     });
 
