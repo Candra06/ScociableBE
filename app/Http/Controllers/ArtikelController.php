@@ -41,36 +41,6 @@ class ArtikelController extends Controller
         return view('dashboard.artikel.detail', ['artikel' => $artikel]);
     }
 
-    public function fetch()
-    {
-        $columns = [
-            'id',
-            'title',
-            'publisher',
-            'status'
-        ];
-
-        $orderBy = $columns[request()->input("order.0.column")];
-        $artikel = Artikel::with(['user']); 
-        if(request()->input("search.value")){
-            $data = $artikel->where(function($query){
-                $query->whereRaw('LOWER(title) like ?',['%'.strtolower(request()->input("search.value")).'%'])
-                ->orWhereRaw('LOWER(description) like ?',['%'.strtolower(request()->input("search.value")).'%'])
-                ->orWhereRaw('LOWER(status) like ?',['%'.strtolower(request()->input("search.value")).'%']);
-            });
-        }
-        $recordsFiltered = $artikel->get()->count();
-        $data = $artikel->skip(request()->input('start'))->take(request()->input('length'))->orderBy($orderBy, request()->input("order.0.dir"))->get();
-        $recordsTotal = $data->count();
-
-        return response()->json([
-            'draw' => request()->input('draw'),
-            'recordsTotal' => $recordsTotal,
-            'recordsFiltered' => $recordsFiltered,
-            'data' => $artikel->get(),
-            'all_request' => request()->all()
-        ]);
-    }
 
     public function store(Request $request){
 

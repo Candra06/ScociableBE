@@ -36,54 +36,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <!-- Modal -->
-                        <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header no-bd">
-                                        <h5 class="modal-title">
-                                            <span class="fw-mediumbold">
-                                            New</span> 
-                                            <span class="fw-light">
-                                                Row
-                                            </span>
-                                        </h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p class="small">Create a new row using this form, make sure you fill them all</p>
-                                        <form>
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div class="form-group form-group-default">
-                                                        <label>Name</label>
-                                                        <input id="addName" type="text" class="form-control" placeholder="fill name">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 pr-0">
-                                                    <div class="form-group form-group-default">
-                                                        <label>Position</label>
-                                                        <input id="addPosition" type="text" class="form-control" placeholder="fill position">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group form-group-default">
-                                                        <label>Office</label>
-                                                        <input id="addOffice" type="text" class="form-control" placeholder="fill office">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer no-bd">
-                                        <button type="button" id="addRowButton" class="btn btn-primary">Add</button>
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
 
                         <div class="table-responsive">
                             <div id="add-row_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
@@ -102,7 +55,38 @@
                                             </thead>
 
                                             <tbody>
-                                                
+                                                @foreach ($members as $member)                                                    
+                                                    <tr>
+                                                        <td>{{ $member->user->username }}</td>
+                                                        <td>{{ $member->amount }}</td>
+                                                        <td>
+                                                            <a href="{{ url('bukti')."/".$member->proof_payment }}" target="_blank" class="btn btn-round btn-success btn-sm">
+                                                            <i class="fas fa-eye my-auto"></i>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            @if($member->payment_status == 'Pending')
+                                                                <span class="badge rounded-pill bg-warning text-white">{{ $member->payment_status }}</span>
+                                                            @elseif($member->payment_status == 'Confirm')
+                                                                <span class="badge rounded-pill bg-success text-white">{{ $member->payment_status }}</span>
+                                                            @else
+                                                                <span class="badge rounded-pill bg-danger text-white">{{ $member->payment_status }}</span>
+                                                            @endif
+                   
+                                                        <td>
+                                                            <div class="form-button-action">
+                                                                <form action="{{ url('membership/update') }}" method="post">
+                                                                    @csrf
+                                                                    <input type="hidden" name="id" value="{{$member->id}}">
+                                                                    <input type="hidden" name="type" value="Confirm">
+                                                                    <button type="submit" class="btn btn-icon btn-round btn-success" data-id="${row.id}" data-type="Confirm" id="confirm"><i class="fa fa-check"></i></button>
+                                                                </form>
+                                                                <button class="btn btn-icon btn-round btn-danger ml-2" data-id="${row.id}" data-type="Decline" id="decline"><i class="fa fa-times"></i></button>
+                                
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
