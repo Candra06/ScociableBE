@@ -61,9 +61,10 @@ class UserController extends Controller
             if (password_verify($password, $data->password)) {
                 $membership = Membership::where('id_user', $data->id)
                 ->where('payment_status', 'Confirm')
-                ->where('exp_date', '>', Carbon::now())
+                ->where('exp_date', '<', Carbon::now())
                 ->orderBy('created_at', 'DESC')
                 ->first();
+                // return $membership;
                 if ($membership) {
                     $success['membership'] = true;
                 }else{
@@ -153,7 +154,7 @@ class UserController extends Controller
     {
         $membership = Membership::where('id_user', Auth::user()->id)
         ->where('payment_status', 'Confirm')
-        ->where('exp_date', '>', Carbon::now())
+        ->where('exp_date', '<', Carbon::now())
         ->orderBy('created_at', 'DESC')
         ->first();
         if ($membership) {
