@@ -81,10 +81,10 @@ class UserController extends Controller
                 $success['token'] =  $data->createToken('nApp')->accessToken;
                 return response()->json(['status' => true, 'data' => $success], 200);
             } else {
-                return response()->json(['status' => false, 'error' => bcrypt($password)], 401);
+                return response()->json(['status' => false, 'data' => 'Login gagal'], 401);
             }
         } else {
-            return response()->json(['status' => false, 'error' => 'Username Salah'], 401);
+            return response()->json(['status' => false, 'data' => 'Username Salah'], 401);
         }
     }
 
