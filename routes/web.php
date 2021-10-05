@@ -45,6 +45,7 @@ Route::middleware('auth')->group(function () {
     // artikel
     Route::prefix('artikel')->name('artikel')->group(function () {
         Route::get('/', [ArtikelController::class, 'index']);
+        Route::get('/list', [ArtikelController::class, 'list']);
         Route::get('/show/{id}', [ArtikelController::class, 'show']);
         Route::get('edit/{id}', [ArtikelController::class, 'edit']);
         Route::get('tambah', [ArtikelController::class, 'tambah']);

@@ -3,20 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Artikel;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use App\Diagnosa;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ArtikelController extends Controller
 {
     public function index(){
-        return view('dashboard.artikel.index');
+        $artikel = Artikel::with(['user'])->get(); 
+
+        return view('dashboard.artikel.index', ['artikels' => $artikel]);
     }
 
     public function tambah(){
         return view('dashboard.artikel.tambah');
 
+    }
+
+    public function list()
+    {
+        $list = Artikel::with(['user'])->get();
+        $data = Diagnosa::all();
+        return view('dashboard.artikel.list', ['data' => $list]);
     }
 
     public function edit($id){
@@ -110,9 +121,6 @@ class ArtikelController extends Controller
 
     public function delete($id){
         Artikel::find($id)->delete();
-  
-        return response()->json([
-            'message' => 'Data deleted successfully!'
-          ]);
+        return redirect('artikel');
     }
 }
