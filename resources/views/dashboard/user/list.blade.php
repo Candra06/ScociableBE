@@ -43,21 +43,28 @@
 
                         <div class="table-responsive">
                             <div id="add-row_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <table id="add-row" class="display table table-striped table-hover" cellspacing="0" width="100%">
+                                            <table id="basic-datatables"
+                                                class="display table table-striped table-hover">
                                             <thead>
                                                 <tr>
                                                     <th>Username</th>
                                                     <th>Email</th>
                                                     <th>Role</th>
-                                                    <th>Action</th>
+
                                                 </tr>
                                             </thead>
 
                                             <tbody>
-                                                
+                                                @foreach ($data as $usr)                                                    
+                                                    <tr>
+                                                        <td>{{ $usr->username }}</td>
+                                                        <td>{{ $usr->email }}</td>
+                                                        <td>{{ $usr->role }}</td>
+
+                                                    </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
