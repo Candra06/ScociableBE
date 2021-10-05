@@ -49,7 +49,7 @@ class KonsultasiController extends Controller
                     $dat[] = KonsultasiDetail::leftJoin('konsultasi_room', 'konsultasi_room.id', 'konsultasi_detail.id_room')
                         ->leftJoin('users', 'users.id', 'konsultasi_room.psikolog')
                         ->where('konsultasi_detail.id_room', $key->id)
-                        ->select('users.username', 'users.id', 'konsultasi_detail.*')
+                        ->select('users.username', 'users.id as id_receiver', 'konsultasi_detail.*')
                         ->orderBy('konsultasi_detail.created_at', 'DESC')->first();
                 }
                 $tmp = [];
@@ -57,7 +57,7 @@ class KonsultasiController extends Controller
                 foreach ($dat as $key) {
                     $tmp['message'] = $key->message;
                     $tmp['username'] = $key->username;
-                    $tmp['receiver'] = $key->id;
+                    $tmp['receiver'] = $key->id_receiver;
                     $tmp['id_room'] = $key->id_room;
                     $tmp['created_at'] = $key->created_at;
                     $data[] = $tmp;
