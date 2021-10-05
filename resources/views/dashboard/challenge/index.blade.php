@@ -57,7 +57,33 @@
                                             </thead>
 
                                             <tbody>
-                                                
+                                                @foreach ($data as $clg)
+                                                    <tr>
+                                                        <td>{{$clg->day}}</td>
+                                                        <td>{{$clg->level_diagnosa}}</td>
+                                                        <td>{!!$clg->content!!}</td>
+                                                        <td>{!!$clg->description!!}</td>
+                                                        <td>
+                                                            <div class="form-button-action">
+                                                                <a href="/challenge/show/{{$clg->id}}" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-success btn-lg" data-original-title="Show clg">
+                                                                    <i class="fas fa-eye"></i>
+                                                                </a>
+                                                                <a href="/challenge/edit/{{$clg->id}}" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit clg">
+                                                                    <i class="fa fa-edit"></i>
+                                                                </a>
+                                                                <form action="{{ url('challenge/' . $clg->id) }}"
+                                                                    method="POST">
+                                                                    @method('delete')
+                                                                    @csrf
+                                                                    <input type="hidden" name="id" value="{{$clg->id}}">
+                                                                    <button type="submit"
+                                                                        class="btn btn-link btn-danger"><i class="fa fa-times"></i></button>
+                                                                </form>
+
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>

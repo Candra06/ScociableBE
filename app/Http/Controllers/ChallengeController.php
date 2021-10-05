@@ -9,7 +9,8 @@ class ChallengeController extends Controller
 {
     public function index()
     {
-        return view('dashboard.challenge.index');
+        $challenge = Challenge::all();
+        return view('dashboard.challenge.index', ['data' => $challenge]);
     }
     
     public function show($id)
@@ -42,37 +43,6 @@ class ChallengeController extends Controller
 
     }
 
-    public function fetch()
-    {
-        $columns = [
-            'day',
-            'level_diagnosa',
-            'content',
-            'description'
-        ];
-
-        $orderBy = $columns[request()->input("order.0.column")];
-        $artikel = Challenge::select('*'); 
-        if(request()->input("search.value")){
-            $data = $artikel->where(function($query){
-                $query->whereRaw('LOWER(day) like ?',['%'.strtolower(request()->input("search.value")).'%'])
-                ->orWhereRaw('LOWER(level_diagnosa) like ?',['%'.strtolower(request()->input("search.value")).'%'])
-                ->orWhereRaw('LOWER(content) like ?',['%'.strtolower(request()->input("search.value")).'%'])
-                ->orWhereRaw('LOWER(description) like ?',['%'.strtolower(request()->input("search.value")).'%']);
-            });
-        }
-        $recordsFiltered = $artikel->get()->count();
-        $data = $artikel->skip(request()->input('start'))->take(request()->input('length'))->orderBy($orderBy, request()->input("order.0.dir"))->get();
-        $recordsTotal = $data->count();
-
-        return response()->json([
-            'draw' => request()->input('draw'),
-            'recordsTotal' => $recordsTotal,
-            'recordsFiltered' => $recordsFiltered,
-            'data' => $artikel->get(),
-            'all_request' => request()->all()
-        ]);
-    }
 
     public function edit($id)
     {
@@ -101,8 +71,6 @@ class ChallengeController extends Controller
     {
         Challenge::find($id)->delete();
   
-        return response()->json([
-            'message' => 'Data deleted successfully!'
-          ]);
+        return redirect('challenge');
     }
 }
